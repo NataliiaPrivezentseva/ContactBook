@@ -1,8 +1,18 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class AppRunner {
 
     public static void main(String[] args) {
+        File fileToRead = new File("c:\\contacts_june.txt");
+        try {
+            List<String> inputInStrings = Input.readFromFile(fileToRead);
+            Output.printToConsole(inputInStrings);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         choseAction();
 
 //        File book = ContactBookManager.createNewContactBook(Input.getInfoFromUser("name of contact book"));

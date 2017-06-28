@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,33 +24,49 @@ class Input {
         return input.nextInt();
     }
 
-    static char[] readFromFile(File fileToRead) throws IOException {
-
-        FileReader inputFromFile = null;
-        List<Character> inputInCharacters = new ArrayList<Character>();
-
+    static List<String> readFromFile(File fileToRead) throws IOException {
+        BufferedReader inputStream;
+        List<String> inputInStrings = new ArrayList<String>();
         try {
-            inputFromFile = new FileReader(fileToRead);
-            int character;
-            while ((character = inputFromFile.read()) != -1) {
-                inputInCharacters.add((char) character);
+            inputStream = new BufferedReader(new FileReader(fileToRead));
+            String stringFromFileToRead;
+            while ((stringFromFileToRead = inputStream.readLine()) != null) {
+                inputInStrings.add(stringFromFileToRead);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            if (inputFromFile != null) {
-                inputFromFile.close();
-            }
         }
-
-        int i = 0;
-        char[] inputInChars = new char[inputInCharacters.size()];
-        for (Character everyCharacter : inputInCharacters) {
-            inputInChars[i] = everyCharacter;
-            i++;
-        }
-
-        return inputInChars;
+        return inputInStrings;
     }
+
+// old method that reads chars
+//    static char[] readFromFile(File fileToRead) throws IOException {
+//
+//        FileReader inputFromFile = null;
+//        List<Character> inputInCharacters = new ArrayList<Character>();
+//
+//        try {
+//            inputFromFile = new FileReader(fileToRead);
+//            int character;
+//            while ((character = inputFromFile.read()) != -1) {
+//                inputInCharacters.add((char) character);
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (inputFromFile != null) {
+//                inputFromFile.close();
+//            }
+//        }
+//
+//        int i = 0;
+//        char[] inputInChars = new char[inputInCharacters.size()];
+//        for (Character everyCharacter : inputInCharacters) {
+//            inputInChars[i] = everyCharacter;
+//            i++;
+//        }
+//
+//        return inputInChars;
+//    }
 
 }

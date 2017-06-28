@@ -9,6 +9,7 @@ class PhoneNumberCreator {
         String regex = "[\\d]{9}";
 
         while (!phoneNumber.matches(regex)) {
+            // need to change message for user: number should consists of 9 characters
             System.out.println("Your phone number contains improper characters!");
             phoneNumber = Input.getInfoFromUser("phone number");
         }
