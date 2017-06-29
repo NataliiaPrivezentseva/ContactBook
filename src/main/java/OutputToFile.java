@@ -1,50 +1,30 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
-class Output {
+class OutputToFile {
 
-//    static void printToConsole(Object o) {
-//        System.out.println(o);
-//    }
+    private FileCreator creator;
 
-    static void printToConsole(List<String> inputInStrings) {
-        for (String s : inputInStrings) {
-            // не печатать результат, а создать объект
-            System.out.println(s);
-        }
+    OutputToFile(FileCreator creator) {
+        this.creator = creator;
     }
 
-//    static void printToConsole(File contactBook) {
-//        System.out.println("Contact book \'" + contactBook.getName() + "\' contains next contacts:");
-//
-//        try {
-//            System.out.println(Input.readFromFile(contactBook));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    // пишем в файл построчно!
-    static File writeToFile(char[] infoToWrite) throws IOException {
-        // make message for user more clear. What information? to put = to write...
-        File fileToWrite = FileCreator.createFile(Input.getInfoFromUser("the name of the file, in which you want to put" +
-                " this information. If file don't exists, it will be created"));
-
-        FileWriter outputToFile;
+    //todo try-with-resources
+    File writeToFile(List<String> infoFromContactBook, String fileName) throws IOException {
+        File fileToWrite = creator.createFile(fileName);
+        PrintWriter outputStream = null;
         try {
-            outputToFile = new FileWriter(fileToWrite);
-            outputToFile.write(infoToWrite);
-            outputToFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            outputStream = new PrintWriter(new FileWriter(fileToWrite));
+            outputStream.println(infoFromContactBook);
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
         return fileToWrite;
     }
-
-    //static File
-
 
 }

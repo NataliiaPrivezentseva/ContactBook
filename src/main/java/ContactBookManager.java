@@ -26,6 +26,9 @@ class ContactBookManager {
         return contactBook;
     }
 
+    // rewrite this method! добавить сообщение для юзера о том, почему не могу записать книгу в файл
+    // логика метода должна быть прописана не тут, а в Persistent Manager
+    // выбросить IllegalStateException, обрабатываем в месте вызова метода
     static File saveBookIntoFile(List<Contact> contactBook) {
         if (contactBook == null){
             throw new NullPointerException();
@@ -33,7 +36,7 @@ class ContactBookManager {
 
         File file = null;
         try {
-            Output.writeToFile(contactBook.toString().toCharArray());
+            OutputToFile.writeToFile(contactBook., file.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }

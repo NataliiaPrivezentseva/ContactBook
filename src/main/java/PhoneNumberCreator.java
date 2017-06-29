@@ -3,14 +3,14 @@ import java.util.List;
 
 class PhoneNumberCreator {
 
-    @SuppressWarnings("WeakerAccess")
+    // нужно вызвать этот метод из другого класса или сделать прайват
     static PhoneNumber createOnePhoneNumber() {
         String phoneNumber = Input.getInfoFromUser("phone number");
         String regex = "[\\d]{9}";
 
         while (!phoneNumber.matches(regex)) {
-            // need to change message for user: number should consists of 9 characters
-            System.out.println("Your phone number contains improper characters!");
+            System.out.println("Your phone number contains improper characters " +
+                    "or has other than 9 amount of numbers in it!");
             phoneNumber = Input.getInfoFromUser("phone number");
         }
 

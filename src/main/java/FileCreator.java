@@ -4,7 +4,7 @@ import java.io.IOException;
 class FileCreator {
 
     // creates txt file at disk C
-    static File createFile(String fileName) {
+    File createFile(String fileName) {
         File file = null;
         try {
             file = new File("c:\\" + fileName + ".txt");

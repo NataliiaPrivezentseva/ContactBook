@@ -8,7 +8,6 @@ public class OutputToConsole {
 
     static void printToConsole(List<String> inputInStrings) {
         for (String s : inputInStrings) {
-            // не печатать результат, а создать объект
             System.out.println(s);
         }
     }

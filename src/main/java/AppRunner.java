@@ -5,10 +5,14 @@ import java.util.List;
 public class AppRunner {
 
     public static void main(String[] args) {
-        File fileToRead = new File("c:\\contacts_june.txt");
+
+
+        // code that reads from file and outputs it to console
+        File fileToRead = new File("c:\\" + Input.getInfoFromUser("name of file, where your contacts" +
+                " are saved") + ".txt");
         try {
             List<String> inputInStrings = Input.readFromFile(fileToRead);
-            Output.printToConsole(inputInStrings);
+            OutputToConsole.printToConsole(inputInStrings);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -21,7 +25,7 @@ public class AppRunner {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        Output.printToConsole(book);
+//        OutputToFile.printToConsole(book);
 
     }
 
