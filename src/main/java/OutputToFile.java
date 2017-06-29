@@ -6,12 +6,13 @@ import java.util.List;
 
 class Output {
 
-    static void printToConsole(Object o) {
-        System.out.println(o);
-    }
+//    static void printToConsole(Object o) {
+//        System.out.println(o);
+//    }
 
     static void printToConsole(List<String> inputInStrings) {
         for (String s : inputInStrings) {
+            // не печатать результат, а создать объект
             System.out.println(s);
         }
     }
@@ -26,6 +27,7 @@ class Output {
 //        }
 //    }
 
+    // пишем в файл построчно!
     static File writeToFile(char[] infoToWrite) throws IOException {
         // make message for user more clear. What information? to put = to write...
         File fileToWrite = FileCreator.createFile(Input.getInfoFromUser("the name of the file, in which you want to put" +

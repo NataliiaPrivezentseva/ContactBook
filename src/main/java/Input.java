@@ -25,7 +25,7 @@ class Input {
     }
 
     static List<String> readFromFile(File fileToRead) throws IOException {
-        BufferedReader inputStream;
+        BufferedReader inputStream = null;
         List<String> inputInStrings = new ArrayList<String>();
         try {
             inputStream = new BufferedReader(new FileReader(fileToRead));
@@ -35,6 +35,12 @@ class Input {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            // нужно выбросить эту ошибку вверх, а потом при ее появлении запустить опять метод из цикла
+        }
+        finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
         return inputInStrings;
     }
