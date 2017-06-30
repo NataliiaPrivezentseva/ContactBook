@@ -4,8 +4,7 @@ import java.util.List;
 
 public class AppRunner {
 
-    public static void main(String[] args) {
-
+    static void runApp() {
 
         // code that reads from file and outputs it to console
         File fileToRead = new File("c:\\" + Input.getInfoFromUser("name of file, where your contacts" +
