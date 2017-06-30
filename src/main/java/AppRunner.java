@@ -5,13 +5,13 @@ import java.util.List;
 class AppRunner {
 
     static void runApp() {
-        Input in = new Input();
+
         // code that reads from file and outputs it to console
-        File fileToRead = new File("c:\\" + in.getInfoFromUser("name of file, where your contacts" +
-                " are saved") + ".txt");
         OutputToConsole out = new OutputToConsole();
         try {
-            List<String> inputInStrings = in.readFromFile(fileToRead);
+            Input in = new Input();
+            List<String> inputInStrings = in.readFromFile(in.getInfoFromUser("name of file, where your contacts" +
+                    " are saved"));
             out.printToConsole(inputInStrings);
         } catch (IOException e) {
             e.printStackTrace();

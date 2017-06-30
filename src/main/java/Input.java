@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,25 +23,15 @@ class Input {
         return input.nextInt();
     }
 
-    List<String> readFromFile(File fileToRead) throws IOException {
-        BufferedReader inputStream = null;
-        List<String> inputInStrings = new ArrayList<String>();
-        try {
-            inputStream = new BufferedReader(new FileReader(fileToRead));
+    List<String> readFromFile(String fileName) throws IOException {
+        File fileToRead = new File("c:\\" + fileName + ".txt");
+        List<String> inputInStrings = new ArrayList<>();
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(fileToRead))) {
             String stringFromFileToRead;
             while ((stringFromFileToRead = inputStream.readLine()) != null) {
                 inputInStrings.add(stringFromFileToRead);
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            // нужно выбросить эту ошибку вверх, а потом при ее появлении запустить опять метод из цикла
+            return inputInStrings;
         }
-        finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-        return inputInStrings;
     }
-
 }
