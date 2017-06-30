@@ -6,11 +6,12 @@ class PhoneNumberCreator {
     @SuppressWarnings("WeakerAccess")
     static PhoneNumber createOnePhoneNumber() {
         String phoneNumber = Input.getInfoFromUser("phone number");
-        String regex = "[\\d]{9}";
+        Validator checkPhoneNumber = new PhoneNumberValidator();
 
-        while (!phoneNumber.matches(regex)) {
+        while (!checkPhoneNumber.isValid(phoneNumber)) {
             // need to change message for user: number should consists of 9 characters
-            System.out.println("Your phone number contains improper characters!");
+            System.out.println("Your phone number contains improper characters" +
+                    "or has improper amount of numbers in it! Make sure that it has exact 9 number character.");
             phoneNumber = Input.getInfoFromUser("phone number");
         }
 

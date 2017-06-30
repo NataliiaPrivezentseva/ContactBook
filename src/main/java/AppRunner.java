@@ -5,6 +5,7 @@ import java.util.List;
 public class AppRunner {
 
     public static void main(String[] args) {
+
         File fileToRead = new File("c:\\contacts_june.txt");
         try {
             List<String> inputInStrings = Input.readFromFile(fileToRead);
