@@ -2,16 +2,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class AppRunner {
+class AppRunner {
 
     static void runApp() {
-
+        Input in = new Input();
         // code that reads from file and outputs it to console
-        File fileToRead = new File("c:\\" + Input.getInfoFromUser("name of file, where your contacts" +
+        File fileToRead = new File("c:\\" + in.getInfoFromUser("name of file, where your contacts" +
                 " are saved") + ".txt");
+        OutputToConsole out = new OutputToConsole();
         try {
-            List<String> inputInStrings = Input.readFromFile(fileToRead);
-            OutputToConsole.printToConsole(inputInStrings);
+            List<String> inputInStrings = in.readFromFile(fileToRead);
+            out.printToConsole(inputInStrings);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,8 +31,9 @@ public class AppRunner {
 
     private static void choseAction() {
         int choice;
+        Input in = new Input();
         do {
-            choice = Input.getNumberFromUser("Please, choose what you want to do:\n" +
+            choice = in.getNumberFromUser("Please, choose what you want to do:\n" +
                     "1 — Create new contact and add it into new contact book\n" +
                     "2 — Create new contact, add it into new contact book, save contact book in a file\n" +
                     "3 — Create new contact book, create new contact and add to book, than add second contact, " +
@@ -43,7 +45,6 @@ public class AppRunner {
 
         } while (choice > 3);
 
-//        List<Contact> contactBook = null;
         switch (choice) {
             case 1:
                 ContactBookManager.addNewContactToBook(ContactCreator.createNewContact(),
