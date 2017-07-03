@@ -8,6 +8,7 @@ class AppRunner {
 
         // code that reads from file and outputs it to console
         OutputToConsole out = new OutputToConsole();
+
         try {
             Input in = new Input();
             List<String> inputInStrings = in.readFromFile(in.getInfoFromUser("name of file, where your contacts" +

@@ -7,14 +7,12 @@ class PhoneNumberCreator {
     static PhoneNumber createOnePhoneNumber() {
         Input in = new Input();
         String phoneNumber = in.getInfoFromUser("phone number");
-        String regex = "[\\d]{9}";
+        Validator checkPhoneNumber = new PhoneNumberValidator();
 
-        while (!phoneNumber.matches(regex)) {
-            System.out.println("Your phone number contains improper characters " +
-                    "or has other than 9 amount of numbers in it!");
+        while (!checkPhoneNumber.isValid(phoneNumber)) {
+            System.out.println(PhoneNumberValidator.PHONE_NUMBER_VALIDATORS_MESSAGE);
             phoneNumber = in.getInfoFromUser("phone number");
         }
-
         return new PhoneNumber(phoneNumber);
     }
 
