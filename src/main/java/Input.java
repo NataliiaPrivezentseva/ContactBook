@@ -25,7 +25,7 @@ class Input {
                 System.out.println("\'" + usersInput + "\' is not proper choice. Try again!");
             }
             numberFromUser = input.nextInt();
-            if (numberFromUser <= 0){
+            if (numberFromUser <= 0) {
                 System.out.println("\'" + numberFromUser + "\' is not proper choice. Try again!");
             }
 
@@ -33,16 +33,19 @@ class Input {
         return numberFromUser;
     }
 
+    int getChoiceFromUser(String message, int amountOfOptions) {
+        int choice;
+        do {
+            choice = this.getNumberFromUser(message);
+        } while (choice <= 0 || choice > amountOfOptions);
+
+        return choice;
+    }
+
+    //todo решить, оставлять ли оба метода чтения из файла
     List<String> readFromFile(String fileName) throws IOException {
         File fileToRead = new File("c:\\" + fileName + ".txt");
-        List<String> inputInStrings = new ArrayList<>();
-        try (BufferedReader inputStream = new BufferedReader(new FileReader(fileToRead))) {
-            String stringFromFileToRead;
-            while ((stringFromFileToRead = inputStream.readLine()) != null) {
-                inputInStrings.add(stringFromFileToRead);
-            }
-            return inputInStrings;
-        }
+        return this.readFromFile(fileToRead);
     }
 
     List<String> readFromFile(File fileToRead) throws IOException {

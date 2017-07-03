@@ -3,7 +3,7 @@ import java.util.List;
 
 class PhoneNumberCreator {
 
-    // нужно вызвать этот метод из другого класса или сделать прайват
+    //todo нужно вызвать этот метод из другого класса или сделать прайват
     static PhoneNumber createOnePhoneNumber() {
         Input in = new Input();
         String phoneNumber = in.getInfoFromUser("phone number");

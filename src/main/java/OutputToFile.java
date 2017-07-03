@@ -6,18 +6,10 @@ import java.util.List;
 
 class OutputToFile {
 
-    private FileCreator creator;
-
-    OutputToFile(FileCreator creator) {
-        this.creator = creator;
-    }
-
-    File writeToFile(List<String> infoFromContactBook, String fileName) throws IOException {
-        File fileToWrite = creator.createFile(fileName);
+File writeToFile(List<String> infoFromContactBook, File fileToWrite) throws IOException {
         try (PrintWriter outputStream = new PrintWriter(new FileWriter(fileToWrite))) {
             outputStream.println(infoFromContactBook);
             return fileToWrite;
         }
-
     }
 }
