@@ -9,9 +9,7 @@ class PhoneNumberCreator {
         Validator checkPhoneNumber = new PhoneNumberValidator();
 
         while (!checkPhoneNumber.isValid(phoneNumber)) {
-            // need to change message for user: number should consists of 9 characters
-            System.out.println("Your phone number contains improper characters" +
-                    "or has improper amount of numbers in it! Make sure that it has exact 9 number character.");
+            System.out.println(PhoneNumberValidator.PHONE_NUMBER_VALIDATORS_MESSAGE);
             phoneNumber = Input.getInfoFromUser("phone number");
         }
 

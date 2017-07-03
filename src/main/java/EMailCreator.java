@@ -5,7 +5,7 @@ class EMailCreator {
         Validator checkEmail = new EmailValidator();
 
         while (!checkEmail.isValid(eMail)) {
-            System.out.println("Your e-mail contains improper characters! Please, enter proper e-mail");
+            System.out.println(EmailValidator.EMAIL_VALIDATORS_MESSAGE);
             eMail = Input.getInfoFromUser("e-mail");
         }
 
