@@ -119,7 +119,7 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    
+
     //todo rewrite this method после смены коллекции!
     Contact findContactInContactBook(String person) {
         Contact contact = null;

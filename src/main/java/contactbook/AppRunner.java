@@ -8,11 +8,7 @@ class AppRunner {
 
     static void runApp() {
         ContactBookManager manager = new ContactBookManager();
-
         InputFromConsole inFromConsole = new InputFromConsole();
-//        contactbook.persistence.file.InputFromFile inFromFile = new contactbook.persistence.file.InputFromFile();
-//        OutputToConsole outToConsole = new OutputToConsole();
-//        OutputToFile outToFile = new OutputToFile();
 
         int choice = inFromConsole.getChoiceFromUser(ContactBookManager.OPTIONS, 7);
 

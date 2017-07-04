@@ -14,6 +14,6 @@ public class EMail {
 
     @Override
     public String toString() {
-        return "E-mail: " + eMail;
+        return eMail;
     }
 }

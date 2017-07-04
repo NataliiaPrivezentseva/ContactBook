@@ -8,10 +8,6 @@ public class PhoneNumber {
         this.phoneNumber = phoneNumber;
     }
 
-//    String getPhoneNumber() {
-//        return phoneNumber;
-//    }
-
     @Override
     public String toString() {
         return phoneNumber;
