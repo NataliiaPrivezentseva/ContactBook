@@ -1,10 +1,10 @@
 package contactbook.logic.controller;
 
-import contactbook.ui.console.InputFromConsole;
 import contactbook.model.Contact;
 import contactbook.persistence.file.FileCreator;
 import contactbook.persistence.file.InputFromFile;
 import contactbook.persistence.file.OutputToFile;
+import contactbook.ui.console.InputFromConsole;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +25,7 @@ public class ContactBookManager {
     private List<Contact> contactBook;
     private File fileToSaveContactBook;
 
-    public List<Contact> getContactBook() {
+    List<Contact> getContactBook() {
         return contactBook;
     }
 
@@ -33,7 +33,7 @@ public class ContactBookManager {
         this.contactBook = contactBook;
     }
 
-    public File getFileToSaveContactBook() {
+    File getFileToSaveContactBook() {
         return fileToSaveContactBook;
     }
 
@@ -63,40 +63,63 @@ public class ContactBookManager {
         }
     }
 
+    private boolean isEmptyFileToSaveContactBook() {
+        InputFromFile inFromFile = new InputFromFile();
+        List<String> previousContacts = new ArrayList<>();
+        try {
+            previousContacts = inFromFile.readFromFile(getFileToSaveContactBook());
 
-    public void prepareForWork(){
-        this.setContactBook(this.createContactBook());
-        this.setFileToSaveContactBook(this.createFileToSaveContactBook());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return previousContacts.isEmpty();
+    }
+
+    public void prepareForWork() {
+        setContactBook(createContactBook());
+        setFileToSaveContactBook(createFileToSaveContactBook());
+        if (!isEmptyFileToSaveContactBook()) {
+            uploadContactsFromDefaultFile();
+        } else {
+            System.out.println("Your contact book contains no contacts.");
+        }
+    }
+
+    private void uploadContactsFromDefaultFile() {
+        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
+        InputFromFile inFromFile = new InputFromFile();
+
+        try {
+            setContactBook(deserialiser.turnIntoContactBook (inFromFile.readFromFile(getFileToSaveContactBook())));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void downloadContactsToDefaultFile() {
+        OutputToFile outToFile = new OutputToFile();
+        ContactBookSerializer serializer = new ContactBookSerializer();
+        List<String> contactsInString = serializer.turnIntoListOfStrings(getContactBook());
+        try {
+            outToFile.writeToFile(contactsInString, getFileToSaveContactBook());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Contact> addNewContactToBook(Contact contact) {
-        OutputToFile outToFile = new OutputToFile();
+        //todo у нас теперь есть метод prepareForWork, который точно создает книгу и файл.
+        //todo Нужна ли тогда тут эта проверка? И теперь мы не подгружем контакты из файла в начале этого метода
         if (contactBook == null) {
-            contactBook = createContactBook();
+            prepareForWork();
         }
 
-        List<String> existingContacts;
-        InputFromFile inFromFile = new InputFromFile();
-        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
-        ContactBookSerializer serializer = new ContactBookSerializer();
-        try {
-            existingContacts = inFromFile.readFromFile(fileToSaveContactBook);
-            contactBook.addAll(deserialiser.turnIntoContactBook(existingContacts));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         contactBook.add(contact);
-
-        List<String> contactsInString = serializer.turnIntoListOfStrings(this.getContactBook());
-        try {
-            outToFile.writeToFile(contactsInString, this.getFileToSaveContactBook());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        downloadContactsToDefaultFile();
         return contactBook;
     }
 
+    
     //todo rewrite this method после смены коллекции!
     Contact findContactInContactBook(String person) {
         Contact contact = null;
