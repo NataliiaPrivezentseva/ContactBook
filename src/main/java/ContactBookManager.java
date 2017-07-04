@@ -55,62 +55,32 @@ class ContactBookManager {
         }
     }
 
-    List<Contact> turnIntoContactBook(List<String> inputInStrings) {
-        int stringsInOneContact = 4;
-        int amountOfStrings = inputInStrings.size();
-        int amountOfIterations = amountOfStrings / stringsInOneContact;
-        List<Contact> contactBook = new ArrayList<>();
-        int startOfContact = -4;
-        while (amountOfIterations > 0) {
-            contactBook.add(turnIntoContact(inputInStrings, startOfContact + 4));
-            startOfContact += 4;
-            amountOfIterations--;
-        }
-        //todo не присваивать тут значение contactBook, а присваивать его из возвращаемого значнеия метода
-//        this.contactBook = contactBook;
-        return contactBook;
-    }
-
-    //todo Сделать его в отдельном классе
-    Contact turnIntoContact(List<String> inputInStrings, int start) {
-        String fieldNameSeparator = ": ";
-        String elementsSeparator = ", ";
-
-        String[] firstName = inputInStrings.get(start).split(fieldNameSeparator, 2);
-        String[] lastName = inputInStrings.get(start + 1).split(fieldNameSeparator, 2);
-        String[] eMail = inputInStrings.get(start + 3).split(fieldNameSeparator, 2);
-
-        int firstIndex = inputInStrings.get(start + 2).indexOf("[") + 1;
-        int lastIndex = inputInStrings.get(start + 2).indexOf("]");
-        String numbersOfPhone = inputInStrings.get(start + 2).substring(firstIndex, lastIndex);
-        String[] numbers = numbersOfPhone.split(elementsSeparator, 0);
-
-        List<PhoneNumber> phoneNumbers = new ArrayList<>();
-        for (String phoneNumber : numbers) {
-            phoneNumbers.add(new PhoneNumber(phoneNumber));
-        }
-
-        return new Contact(new Person(firstName[1], lastName[1]), phoneNumbers, new EMail(eMail[1]));
-    }
 
     List<Contact> addNewContactToBook(Contact contact) {
+        OutputToFile outToFile = new OutputToFile();
         if (contactBook == null) {
             contactBook = createContactBook();
         }
 
         List<String> existingContacts;
         InputFromFile inFromFile = new InputFromFile();
+        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
+        ContactBookSerializer serializer = new ContactBookSerializer();
         try {
             existingContacts = inFromFile.readFromFile(fileToSaveContactBook);
-            contactBook.addAll(this.turnIntoContactBook(existingContacts));
+            contactBook.addAll(deserialiser.turnIntoContactBook(existingContacts));
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        for (Contact existingContact : contactBook) {
-//            String s = existingContact.toString();
-//            existingContacts.add(s);
-//        }
         contactBook.add(contact);
+
+        List<String> contactsInString = serializer.turnIntoListOfStrings(this.getContactBook());
+        try {
+            outToFile.writeToFile(contactsInString, this.getFileToSaveContactBook());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return contactBook;
     }
 

@@ -24,7 +24,8 @@ public class ContactBookManagerTest {
         Contact expected = new Contact(new Person("Vasya", "Pupkin"), phones, new EMail("v.pupkin@pisem.net"));*/
 
         //when:
-        Contact contact = bookManager.turnIntoContact(contactStrings, 0);
+        ContactDeserialiser deserialiser = new ContactDeserialiser();
+        Contact contact = deserialiser.turnIntoContact(contactStrings, 0);
 
         //then:
 //        assertEquals(expected, contact);

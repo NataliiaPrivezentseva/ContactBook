@@ -1,16 +1,12 @@
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 class AppRunner {
 
     static void runApp() {
         ContactBookManager manager = new ContactBookManager();
 
         InputFromConsole inFromConsole = new InputFromConsole();
-        InputFromFile inFromFile = new InputFromFile();
-        OutputToConsole outToConsole = new OutputToConsole();
-        OutputToFile outToFile = new OutputToFile();
+//        InputFromFile inFromFile = new InputFromFile();
+//        OutputToConsole outToConsole = new OutputToConsole();
+//        OutputToFile outToFile = new OutputToFile();
 
         int choice = inFromConsole.getChoiceFromUser(ContactBookManager.OPTIONS, 7);
 
@@ -20,16 +16,6 @@ class AppRunner {
         switch (choice) {
             case 1:
                 manager.addNewContactToBook(ContactCreator.createNewContact());
-
-                List<String> contactsInString = new ArrayList<>();
-                for (Contact myContact : manager.getContactBook()) {
-                    contactsInString.add(myContact.toString());
-                }
-                try {
-                    outToFile.writeToFile(contactsInString, manager.getFileToSaveContactBook());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 break;
             case 2:
                 break;
