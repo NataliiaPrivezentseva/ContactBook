@@ -1,17 +1,22 @@
+package contactbook;
+
+import contactbook.logic.controller.ContactBookManager;
+import contactbook.logic.creators.ContactCreator;
+import contactbook.ui.console.InputFromConsole;
+
 class AppRunner {
 
     static void runApp() {
         ContactBookManager manager = new ContactBookManager();
 
         InputFromConsole inFromConsole = new InputFromConsole();
-//        InputFromFile inFromFile = new InputFromFile();
+//        contactbook.persistence.file.InputFromFile inFromFile = new contactbook.persistence.file.InputFromFile();
 //        OutputToConsole outToConsole = new OutputToConsole();
 //        OutputToFile outToFile = new OutputToFile();
 
         int choice = inFromConsole.getChoiceFromUser(ContactBookManager.OPTIONS, 7);
 
-        manager.setContactBook(manager.createContactBook());
-        manager.setFileToSaveContactBook(manager.createFileToSaveContactBook());
+        manager.prepareForWork();
 
         switch (choice) {
             case 1:

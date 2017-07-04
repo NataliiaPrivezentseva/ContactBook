@@ -1,6 +1,8 @@
+package contactbook.ui.console;
+
 import java.util.List;
 
-class OutputToConsole {
+public class OutputToConsole {
 
     void printToConsole(List<String> inputInStrings) {
         for (String s : inputInStrings) {

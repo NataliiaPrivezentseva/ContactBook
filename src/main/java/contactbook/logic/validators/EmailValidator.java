@@ -1,3 +1,5 @@
+package contactbook.logic.validators;
+
 public class EmailValidator implements Validator {
     public static final String EMAIL_VALIDATORS_MESSAGE =
             "Your e-mail contains improper characters! Please, enter proper e-mail";

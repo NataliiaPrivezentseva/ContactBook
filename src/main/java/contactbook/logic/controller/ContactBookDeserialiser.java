@@ -1,7 +1,11 @@
+package contactbook.logic.controller;
+
+import contactbook.model.Contact;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactBookDeserialiser {
+class ContactBookDeserialiser {
 
     List<Contact> turnIntoContactBook(List<String> inputInStrings) {
         ContactDeserialiser deserialiser = new ContactDeserialiser();

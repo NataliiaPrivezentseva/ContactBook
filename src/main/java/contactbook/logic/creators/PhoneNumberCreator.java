@@ -1,3 +1,10 @@
+package contactbook.logic.creators;
+
+import contactbook.logic.validators.PhoneNumberValidator;
+import contactbook.logic.validators.Validator;
+import contactbook.ui.console.InputFromConsole;
+import contactbook.model.PhoneNumber;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +25,8 @@ class PhoneNumberCreator {
 
     static List<PhoneNumber> createNewListOfPersonsPhoneNumbers() {
         List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-        InputFromConsole in = new InputFromConsole();
-        int amount = in.getNumberFromUser("Please, enter, how many phone numbers has this person");
+        InputFromConsole inFromConsole = new InputFromConsole();
+        int amount = inFromConsole.getNumberFromUser("Please, enter, how many phone numbers has this person");
         for (int i = 0; i < amount; i++) {
             phoneNumbers.add(createOnePhoneNumber());
         }

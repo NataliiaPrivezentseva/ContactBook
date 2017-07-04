@@ -1,3 +1,10 @@
+package contactbook.logic.controller;
+
+import contactbook.model.Contact;
+import contactbook.model.EMail;
+import contactbook.model.Person;
+import contactbook.model.PhoneNumber;
+
 import java.util.ArrayList;
 import java.util.List;
 

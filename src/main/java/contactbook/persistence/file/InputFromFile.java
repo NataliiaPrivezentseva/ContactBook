@@ -1,3 +1,5 @@
+package contactbook.persistence.file;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,7 +15,7 @@ public class InputFromFile {
         return this.readFromFile(fileToRead);
     }
 
-    List<String> readFromFile(File fileToRead) throws IOException {
+    public List<String> readFromFile(File fileToRead) throws IOException {
         List<String> inputInStrings = new ArrayList<>();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(fileToRead))) {
             String stringFromFileToRead;

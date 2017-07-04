@@ -1,3 +1,10 @@
+package contactbook.logic.creators;
+
+import contactbook.logic.validators.EmailValidator;
+import contactbook.logic.validators.Validator;
+import contactbook.ui.console.InputFromConsole;
+import contactbook.model.EMail;
+
 class EMailCreator {
 
     static EMail createNewEmail() {

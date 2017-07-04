@@ -1,10 +1,18 @@
+package contactbook.logic.controller;
+
+import contactbook.ui.console.InputFromConsole;
+import contactbook.model.Contact;
+import contactbook.persistence.file.FileCreator;
+import contactbook.persistence.file.InputFromFile;
+import contactbook.persistence.file.OutputToFile;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-class ContactBookManager {
+public class ContactBookManager {
     public static final String OPTIONS = "Please, choose what you want to do:\n" +
             "1 — Add new contact\n" +
             "2 — Show contacts\n" +
@@ -56,7 +64,12 @@ class ContactBookManager {
     }
 
 
-    List<Contact> addNewContactToBook(Contact contact) {
+    public void prepareForWork(){
+        this.setContactBook(this.createContactBook());
+        this.setFileToSaveContactBook(this.createFileToSaveContactBook());
+    }
+
+    public List<Contact> addNewContactToBook(Contact contact) {
         OutputToFile outToFile = new OutputToFile();
         if (contactBook == null) {
             contactBook = createContactBook();

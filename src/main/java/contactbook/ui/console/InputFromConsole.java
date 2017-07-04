@@ -1,14 +1,16 @@
+package contactbook.ui.console;
+
 import java.util.Scanner;
 
-class InputFromConsole {
+public class InputFromConsole {
 
-    String getInfoFromUser(String message) {
+    public String getInfoFromUser(String message) {
         Scanner input = new Scanner(System.in);
         System.out.println("Please, enter " + message);
         return input.nextLine();
     }
 
-    int getNumberFromUser(String message) {
+    public int getNumberFromUser(String message) {
         int numberFromUser;
         Scanner input = new Scanner(System.in);
         do {
@@ -27,7 +29,7 @@ class InputFromConsole {
         return numberFromUser;
     }
 
-    int getChoiceFromUser(String message, int amountOfOptions) {
+    public int getChoiceFromUser(String message, int amountOfOptions) {
         int choice;
         do {
             choice = this.getNumberFromUser(message);

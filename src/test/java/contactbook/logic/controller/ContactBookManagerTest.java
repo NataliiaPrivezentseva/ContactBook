@@ -1,14 +1,15 @@
-import jdk.nashorn.internal.ir.annotations.Immutable;
-import org.junit.Assert;
+package contactbook.logic.controller;
+
+import contactbook.model.Contact;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ContactBookManagerTest {
+
     @Test
     public void shouldDeserializeContact() {
         //given:
@@ -16,12 +17,13 @@ public class ContactBookManagerTest {
                 "Last name: Pupkin",
                 "Phone numbers: [444888999]",
                 "E-mail: v.pupkin@pisem.net");
-        ContactBookManager bookManager = new ContactBookManager();
+        ContactBookManager manager = new ContactBookManager();
 
-        /*List<PhoneNumber> phones = new ArrayList<>();
-        phones.add(new PhoneNumber("444888999"));
+        /*List<contactbook.model.PhoneNumber> phones = new ArrayList<>();
+        phones.add(new contactbook.model.PhoneNumber("444888999"));
 
-        Contact expected = new Contact(new Person("Vasya", "Pupkin"), phones, new EMail("v.pupkin@pisem.net"));*/
+        contactbook.model.Contact expected = new contactbook.model.Contact(new contactbook.model.Person("Vasya",
+        "Pupkin"), phones, new contactbook.model.EMail("v.pupkin@pisem.net"));*/
 
         //when:
         ContactDeserialiser deserialiser = new ContactDeserialiser();
@@ -31,5 +33,4 @@ public class ContactBookManagerTest {
 //        assertEquals(expected, contact);
         assertEquals("Vasya", contact.getPerson().getFirstName());
     }
-
 }

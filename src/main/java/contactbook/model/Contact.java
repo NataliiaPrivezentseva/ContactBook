@@ -1,3 +1,5 @@
+package contactbook.model;
+
 import java.util.List;
 
 public class Contact {
@@ -5,7 +7,7 @@ public class Contact {
     private List<PhoneNumber> phoneNumbers;
     private EMail eMail;
 
-    Contact(Person person, List<PhoneNumber> phoneNumbers, EMail eMail) {
+    public Contact(Person person, List<PhoneNumber> phoneNumbers, EMail eMail) {
         this.person = person;
         this.phoneNumbers = phoneNumbers;
         this.eMail = eMail;
