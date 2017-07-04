@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 
 class ContactBookManager {
     public static final String OPTIONS = "Please, choose what you want to do:\n" +
-            "1 — Show contacts\n" +
-            "2 — Add new contact\n" +
+            "1 — Add new contact\n" +
+            "2 — Show contacts\n" +
             "3 — Find contact\n" +
             "4 — Edit contact\n" +
             "5 — Delete contact\n" +
@@ -67,7 +67,7 @@ class ContactBookManager {
             amountOfIterations--;
         }
         //todo не присваивать тут значение contactBook, а присваивать его из возвращаемого значнеия метода
-        this.contactBook = contactBook;
+//        this.contactBook = contactBook;
         return contactBook;
     }
 
@@ -102,7 +102,7 @@ class ContactBookManager {
         InputFromFile inFromFile = new InputFromFile();
         try {
             existingContacts = inFromFile.readFromFile(fileToSaveContactBook);
-            this.turnIntoContactBook(existingContacts);
+            contactBook.addAll(this.turnIntoContactBook(existingContacts));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +110,6 @@ class ContactBookManager {
 //            String s = existingContact.toString();
 //            existingContacts.add(s);
 //        }
-
         contactBook.add(contact);
         return contactBook;
     }
