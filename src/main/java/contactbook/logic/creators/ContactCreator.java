@@ -1,6 +1,10 @@
-class ContactCreator {
+package contactbook.logic.creators;
 
-    static Contact createNewContact() {
+import contactbook.model.Contact;
+
+public class ContactCreator {
+
+    public static Contact createNewContact() {
         return new Contact(PersonCreator.createNewPerson(), PhoneNumberCreator.createNewListOfPersonsPhoneNumbers(),
                 EMailCreator.createNewEmail());
     }

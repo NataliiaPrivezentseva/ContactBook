@@ -1,8 +1,10 @@
+package contactbook.model;
+
 public class EMail {
 
     private String eMail;
 
-    EMail(String eMail) {
+    public EMail(String eMail) {
         this.eMail = eMail;
     }
 
@@ -12,6 +14,6 @@ public class EMail {
 
     @Override
     public String toString() {
-        return "E-mail: " + eMail;
+        return eMail;
     }
 }
