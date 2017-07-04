@@ -13,14 +13,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ContactBookManager {
-    public static final String OPTIONS = "Please, choose what you want to do:\n" +
-            "1 — Add new contact\n" +
-            "2 — Show contacts\n" +
-            "3 — Find contact\n" +
-            "4 — Edit contact\n" +
-            "5 — Delete contact\n" +
-            "6 — Upload contacts from file\n" +
-            "7 — Download contact book to file\n";
 
     private List<Contact> contactBook;
     private File fileToSaveContactBook;
@@ -85,6 +77,7 @@ public class ContactBookManager {
         }
     }
 
+    //    todo добавить входящий параметр
     private void uploadContactsFromDefaultFile() {
         ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
         InputFromFile inFromFile = new InputFromFile();
@@ -96,6 +89,7 @@ public class ContactBookManager {
         }
     }
 
+    //    todo добавить входящий параметр
     private void downloadContactsToDefaultFile() {
         OutputToFile outToFile = new OutputToFile();
         ContactBookSerializer serializer = new ContactBookSerializer();
@@ -108,10 +102,8 @@ public class ContactBookManager {
     }
 
     public List<Contact> addNewContactToBook(Contact contact) {
-        //todo у нас теперь есть метод prepareForWork, который точно создает книгу и файл.
-        //todo Нужна ли тогда тут эта проверка? И теперь мы не подгружем контакты из файла в начале этого метода
         if (contactBook == null) {
-            prepareForWork();
+            throw new IllegalStateException("Something went wrong! There is no contact book.");
         }
 
         contactBook.add(contact);
