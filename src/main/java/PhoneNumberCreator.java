@@ -5,7 +5,7 @@ class PhoneNumberCreator {
 
     //todo нужно вызвать этот метод из другого класса или сделать прайват
     static PhoneNumber createOnePhoneNumber() {
-        Input in = new Input();
+        InputFromConsole in = new InputFromConsole();
         String phoneNumber = in.getInfoFromUser("phone number");
         Validator checkPhoneNumber = new PhoneNumberValidator();
 
@@ -18,7 +18,7 @@ class PhoneNumberCreator {
 
     static List<PhoneNumber> createNewListOfPersonsPhoneNumbers() {
         List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-        Input in = new Input();
+        InputFromConsole in = new InputFromConsole();
         int amount = in.getNumberFromUser("Please, enter, how many phone numbers has this person");
         for (int i = 0; i < amount; i++) {
             phoneNumbers.add(createOnePhoneNumber());

@@ -6,10 +6,11 @@ class AppRunner {
 
     static void runApp() {
         ContactBookManager manager = new ContactBookManager();
-        Input in = new Input();
+        InputFromConsole inFromConsole = new InputFromConsole();
+        InputFromFile inFromFile = new InputFromFile();
         OutputToConsole outToConsole = new OutputToConsole();
         OutputToFile outToFile = new OutputToFile();
-        int choice = in.getChoiceFromUser(ContactBookManager.OPTIONS, 7);
+        int choice = inFromConsole.getChoiceFromUser(ContactBookManager.OPTIONS, 7);
         manager.setContactBook(manager.createContactBook());
         manager.setFileToSaveContactBook(manager.createFileToSaveContactBook());
 

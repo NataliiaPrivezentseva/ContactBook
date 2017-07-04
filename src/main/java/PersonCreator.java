@@ -1,7 +1,7 @@
 class PersonCreator {
 
     static Person createNewPerson() {
-        Input in = new Input();
-        return new Person(in.getInfoFromUser("first name"), in.getInfoFromUser("last name"));
+        InputFromConsole outToConsole = new InputFromConsole();
+        return new Person(outToConsole.getInfoFromUser("first name"), outToConsole.getInfoFromUser("last name"));
     }
 }

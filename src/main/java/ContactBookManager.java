@@ -38,8 +38,8 @@ class ContactBookManager {
     }
 
     File createFileToSaveContactBook() {
-        Input in = new Input();
-        int choice = in.getChoiceFromUser("Where do you want to write your contact book?\n" +
+        InputFromConsole inFromConsole = new InputFromConsole();
+        int choice = inFromConsole.getChoiceFromUser("Where do you want to write your contact book?\n" +
                 "1 — into default file named \'my_contacts\' which placed on disc C;\n" +
                 "2 — I want to use another file.", 2);
 
@@ -48,7 +48,8 @@ class ContactBookManager {
             case 1:
                 return fileCreator.createFile("my_contacts");
             case 2:
-                return fileCreator.createFile(in.getInfoFromUser("name of file, where your contacts will be saved."));
+                return fileCreator.createFile(inFromConsole.getInfoFromUser("name of file, where your contacts " +
+                        "will be saved."));
             default:
                 throw new IllegalStateException();
         }
@@ -98,9 +99,9 @@ class ContactBookManager {
         }
 
         List<String> existingContacts;
-        Input in = new Input();
+        InputFromFile inFromFile = new InputFromFile();
         try {
-            existingContacts = in.readFromFile(fileToSaveContactBook);
+            existingContacts = inFromFile.readFromFile(fileToSaveContactBook);
             this.turnIntoContactBook(existingContacts);
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,8 +142,8 @@ class ContactBookManager {
             fileToSaveContactBook = manager.createFileToSaveContactBook();
         }
 
-        Input in = new Input();
-        List<String> contacts = in.readFromFile(fileToSaveContactBook);
+        InputFromFile inFromFile = new InputFromFile();
+        List<String> contacts = inFromFile.readFromFile(fileToSaveContactBook);
 
         for (Contact contact : contactBook) {
             contacts.add(contact.toString());
