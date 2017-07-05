@@ -15,7 +15,7 @@ class ContactBookDeserialiser {
         for (int startOfContact = 0;
              startOfContact <= inputInStrings.size() - stringsInOneContact;
              startOfContact += stringsInOneContact) {
-            contactBook.add(deserialiser.turnIntoContact(inputInStrings, startOfContact + stringsInOneContact));
+            contactBook.add(deserialiser.turnIntoContact(inputInStrings, startOfContact));
         }
         return contactBook;
     }
