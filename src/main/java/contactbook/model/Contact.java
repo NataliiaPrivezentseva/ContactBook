@@ -3,6 +3,7 @@ package contactbook.model;
 import java.util.List;
 
 public class Contact {
+    public static final int STRINGS_IN_ONE_CONTACT = 4;
     private Person person;
     private List<PhoneNumber> phoneNumbers;
     private EMail eMail;
