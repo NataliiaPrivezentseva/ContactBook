@@ -41,6 +41,28 @@ class AppRunner {
             case 3:
                 break;
             case 4:
+                choice = inFromConsole.getChoiceFromUser(EDIT_OPTIONS, 8);
+                switch (choice){
+                    case 1:
+                        System.out.println("I work!");
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                    case 5:
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    default:
+                        throw new IllegalStateException();
+                }
                 break;
             case 5:
                 break;
