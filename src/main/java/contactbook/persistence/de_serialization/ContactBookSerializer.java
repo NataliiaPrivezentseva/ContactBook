@@ -1,13 +1,13 @@
-package contactbook.logic.controller;
+package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ContactBookSerializer {
+public class ContactBookSerializer {
 
-    List<String> turnIntoListOfStrings(List<Contact> contactBook){
+    public List<String> turnIntoListOfStrings(List<Contact> contactBook){
         List<String> contactsInString = new ArrayList<>();
         for (Contact contact : contactBook) {
             contactsInString.add(contact.toString());
