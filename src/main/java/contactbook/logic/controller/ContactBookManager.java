@@ -40,16 +40,17 @@ public class ContactBookManager {
         return new ArrayList<>();
     }
 
+    //todo метод лишний, потому как теперь в нем нет опций выбора?
     private File createFileToSaveContactBook(String fileName) {
         FileCreator fileCreator = new FileCreator();
         return fileCreator.createFile(fileName);
     }
 
-    private boolean isEmptyFileToSaveContactBook() {
+    private boolean isEmptyFile(File file) {
         InputFromFile inFromFile = new InputFromFile();
         List<String> previousContacts = new ArrayList<>();
         try {
-            previousContacts = inFromFile.readFromFile(getFileToSaveContactBook());
+            previousContacts = inFromFile.readFromFile(file);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,16 +58,20 @@ public class ContactBookManager {
         return previousContacts.isEmpty();
     }
 
+    private boolean isEmptyFileToSaveContactBook() {
+        return isEmptyFile(getFileToSaveContactBook());
+    }
+
     //todo а не выделить ли из части кода отдельный метод? типа getBaseFileNameFromUser
     //todo может, строку-вопрос сделать константой в этом классе?
     public void prepareForWork() {
         InputFromConsole inFromConsole = new InputFromConsole();
         String message = "In which file do you want to store your contact book?\n" +
-                "1 — into default file named \\'my_contacts\\' which placed on disc C;\\n\" +\n" +
-                "2 — I want to use another file.";
+                "1 — into default file named \\'my_contacts\\' which placed on disc C\n" +
+                "2 — I want to use another file";
         int choice = inFromConsole.getChoiceFromUser(message, 2);
         String fileName;
-        switch (choice){
+        switch (choice) {
             case 1:
                 fileName = "my_contacts";
                 break;
@@ -141,6 +146,15 @@ public class ContactBookManager {
         }
         contactBook.remove(contact);
         return contactBook;
+    }
+
+    //todo доделать метод
+    public void uploadContactsFromFile(String fileName) {
+        FileCreator creator = new FileCreator();
+        File file = creator.createFile(fileName);
+        if (isEmptyFile(file)) {
+
+        }
     }
 
     public void downloadContactBookToFile(String fileName) throws IOException {
