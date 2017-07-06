@@ -7,6 +7,7 @@ import contactbook.persistence.file.FileCreator;
 import contactbook.persistence.file.InputFromFile;
 import contactbook.persistence.file.OutputToFile;
 import contactbook.ui.console.InputFromConsole;
+import contactbook.ui.console.OutputToConsole;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,27 +20,27 @@ public class ContactBookManager {
     private List<Contact> contactBook;
     private File fileToSaveContactBook;
 
-    List<Contact> getContactBook() {
+    private List<Contact> getContactBook() {
         return contactBook;
     }
 
-    void setContactBook(List<Contact> contactBook) {
+    private void setContactBook(List<Contact> contactBook) {
         this.contactBook = contactBook;
     }
 
-    File getFileToSaveContactBook() {
+    private File getFileToSaveContactBook() {
         return fileToSaveContactBook;
     }
 
-    void setFileToSaveContactBook(File fileToSaveContactBook) {
+    private void setFileToSaveContactBook(File fileToSaveContactBook) {
         this.fileToSaveContactBook = fileToSaveContactBook;
     }
 
-    List<Contact> createContactBook() {
+    private List<Contact> createContactBook() {
         return new ArrayList<>();
     }
 
-    File createFileToSaveContactBook() {
+    private File createFileToSaveContactBook() {
         InputFromConsole inFromConsole = new InputFromConsole();
         int choice = inFromConsole.getChoiceFromUser("Where do you want to write your contact book?\n" +
                 "1 — into default file named \'my_contacts\' which placed on disc C;\n" +
@@ -77,21 +78,19 @@ public class ContactBookManager {
             try {
                 uploadContactsFromFile(getFileToSaveContactBook());
             } catch (IOException e) {
-                System.out.println("Something wrong with the file, in which you keep your contact book");;
+                System.out.println("Something wrong with the file, in which you keep your contact book");
             }
         } else {
             System.out.println("Your contact book contains no contacts.");
         }
     }
 
-    //    todo
     private void uploadContactsFromFile(File file) throws IOException {
         ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
         InputFromFile inFromFile = new InputFromFile();
         setContactBook(deserialiser.turnIntoContactBook(inFromFile.readFromFile(file)));
     }
 
-    //    todo
     private void downloadContactsToFile(File file) throws IOException {
         OutputToFile outToFile = new OutputToFile();
         ContactBookSerializer serializer = new ContactBookSerializer();
@@ -116,6 +115,12 @@ public class ContactBookManager {
         return contactBook;
     }
 
+    public void showContacts(){
+        OutputToConsole outToConsole = new OutputToConsole();
+        ContactBookSerializer serializer = new ContactBookSerializer();
+
+        outToConsole.printToConsole(serializer.turnIntoListOfStrings(getContactBook()));
+    }
 
     //todo rewrite this method после смены коллекции!
     Contact findContactInContactBook(String person) {
@@ -131,8 +136,7 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    //todo rewrite this method! добавить сообщение для юзера о том, почему не могу записать книгу в файл
-    // логика метода должна быть прописана не тут, а в Persistent Manager
+    //todo rewrite and rename this method! добавить сообщение для юзера о том, почему не могу записать книгу в файл
     //todo прописать логику в месте выбора пользователем сохранить книгу.
     File saveContactBookIntoFile() throws IOException {
         ContactBookManager manager = new ContactBookManager();
