@@ -4,6 +4,8 @@ import contactbook.logic.controller.ContactBookManager;
 import contactbook.logic.creators.ContactCreator;
 import contactbook.ui.console.InputFromConsole;
 
+import java.io.IOException;
+
 class AppRunner {
     private static final String OPTIONS = "Please, choose what you want to do:\n" +
             "1 — Add new contact\n" +
@@ -13,7 +15,7 @@ class AppRunner {
             "5 — Delete contact\n" +
             "6 — Upload contacts from file\n" +
             "7 — Download contact book to file\n";
-    
+
     private static final String EDIT_OPTIONS = "Choose, what do you want to do with chosen contact:\n" +
             "1 — Change first name\n" +
             "2 — Change last name\n" +
@@ -28,9 +30,8 @@ class AppRunner {
         ContactBookManager manager = new ContactBookManager();
         InputFromConsole inFromConsole = new InputFromConsole();
 
-        int choice = inFromConsole.getChoiceFromUser(OPTIONS, 7);
-
         manager.prepareForWork();
+        int choice = inFromConsole.getChoiceFromUser(OPTIONS, 7);
 
         switch (choice) {
             case 1:
@@ -43,7 +44,7 @@ class AppRunner {
                 break;
             case 4:
                 choice = inFromConsole.getChoiceFromUser(EDIT_OPTIONS, 8);
-                switch (choice){
+                switch (choice) {
                     case 1:
                         System.out.println("I work!");
                         break;
@@ -70,6 +71,13 @@ class AppRunner {
             case 6:
                 break;
             case 7:
+                try {
+                    manager.downloadContactBookToFile(inFromConsole.getInfoFromUser("name of the file, " +
+                            "where you want to download your contact book."));
+                } catch (IOException e) {
+                    System.out.println("Something wrong with the file, in which you want to download " +
+                            "your contact book");
+                }
                 break;
             default:
                 throw new IllegalStateException();

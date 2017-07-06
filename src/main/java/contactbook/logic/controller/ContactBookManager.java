@@ -40,22 +40,9 @@ public class ContactBookManager {
         return new ArrayList<>();
     }
 
-    private File createFileToSaveContactBook() {
-        InputFromConsole inFromConsole = new InputFromConsole();
-        int choice = inFromConsole.getChoiceFromUser("Where do you want to write your contact book?\n" +
-                "1 — into default file named \'my_contacts\' which placed on disc C;\n" +
-                "2 — I want to use another file.", 2);
-
+    private File createFileToSaveContactBook(String fileName) {
         FileCreator fileCreator = new FileCreator();
-        switch (choice) {
-            case 1:
-                return fileCreator.createFile("my_contacts");
-            case 2:
-                return fileCreator.createFile(inFromConsole.getInfoFromUser("name of file, where your contacts " +
-                        "will be saved."));
-            default:
-                throw new IllegalStateException();
-        }
+        return fileCreator.createFile(fileName);
     }
 
     private boolean isEmptyFileToSaveContactBook() {
@@ -70,10 +57,29 @@ public class ContactBookManager {
         return previousContacts.isEmpty();
     }
 
-    //todo решить, где спросить юзера, из какого файла подгружать данные
+    //todo а не выделить ли из части кода отдельный метод? типа getBaseFileNameFromUser
+    //todo может, строку-вопрос сделать константой в этом классе?
     public void prepareForWork() {
+        InputFromConsole inFromConsole = new InputFromConsole();
+        String message = "In which file do you want to store your contact book?\n" +
+                "1 — into default file named \\'my_contacts\\' which placed on disc C;\\n\" +\n" +
+                "2 — I want to use another file.";
+        int choice = inFromConsole.getChoiceFromUser(message, 2);
+        String fileName;
+        switch (choice){
+            case 1:
+                fileName = "my_contacts";
+                break;
+            case 2:
+                fileName = inFromConsole.getInfoFromUser("Please, enter name of file, " +
+                        "where your contacts will be saved.");
+                break;
+            default:
+                throw new IllegalStateException();
+        }
+
         setContactBook(createContactBook());
-        setFileToSaveContactBook(createFileToSaveContactBook());
+        setFileToSaveContactBook(createFileToSaveContactBook(fileName));
         if (!isEmptyFileToSaveContactBook()) {
             try {
                 uploadContactsFromFile(getFileToSaveContactBook());
@@ -115,7 +121,7 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    public void showContacts(){
+    public void showContacts() {
         OutputToConsole outToConsole = new OutputToConsole();
         ContactBookSerializer serializer = new ContactBookSerializer();
 
@@ -137,25 +143,11 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    //todo rewrite and rename this method! добавить сообщение для юзера о том, почему не могу записать книгу в файл
-    //todo прописать логику в месте выбора пользователем сохранить книгу.
-    File downloadContactBookToFile() throws IOException {
-        ContactBookManager manager = new ContactBookManager();
-        if (this.contactBook.isEmpty()) {
+    public void downloadContactBookToFile(String fileName) throws IOException {
+        if (contactBook.isEmpty()) {
             throw new IllegalStateException("This contact book contains no contacts. It won't be written in a file.");
         }
-
-        if (fileToSaveContactBook == null) {
-            fileToSaveContactBook = manager.createFileToSaveContactBook();
-        }
-
-        InputFromFile inFromFile = new InputFromFile();
-        List<String> contacts = inFromFile.readFromFile(fileToSaveContactBook);
-
-        for (Contact contact : contactBook) {
-            contacts.add(contact.toString());
-        }
-        OutputToFile output = new OutputToFile();
-        return output.writeToFile(contacts, fileToSaveContactBook);
+        File file = createFileToSaveContactBook(fileName);
+        downloadContactsToFile(file);
     }
 }
