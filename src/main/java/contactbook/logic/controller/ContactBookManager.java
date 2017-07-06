@@ -100,7 +100,7 @@ public class ContactBookManager {
 
     //todo обсудить, а не пробросить ли исключение еще выше.
     //todo Мне оно тут нравится, но, может, лучше обрабатывать в AppRunner
-    public List<Contact> addNewContactToBook(Contact contact) {
+    public List<Contact> addNewContact(Contact contact) {
         if (contactBook == null) {
             throw new IllegalStateException("Something went wrong! There is no contact book.");
         }
@@ -123,12 +123,13 @@ public class ContactBookManager {
     }
 
     //todo rewrite this method после смены коллекции!
-    Contact findContactInContactBook(String person) {
+    Contact findContact(String person) {
         Contact contact = null;
         return contact;
     }
 
-    List<Contact> removeContactFromContactBook(Contact contact) {
+    List<Contact> deleteContact(Contact contact) {
+        //todo вызвать тут метод findContact, проверка на наличие контакта должна быть в методе findContact
         if (!contactBook.contains(contact)) {
             throw new NoSuchElementException();
         }
@@ -138,7 +139,7 @@ public class ContactBookManager {
 
     //todo rewrite and rename this method! добавить сообщение для юзера о том, почему не могу записать книгу в файл
     //todo прописать логику в месте выбора пользователем сохранить книгу.
-    File saveContactBookIntoFile() throws IOException {
+    File downloadContactBookToFile() throws IOException {
         ContactBookManager manager = new ContactBookManager();
         if (this.contactBook.isEmpty()) {
             throw new IllegalStateException("This contact book contains no contacts. It won't be written in a file.");

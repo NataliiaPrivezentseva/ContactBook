@@ -34,7 +34,7 @@ class AppRunner {
 
         switch (choice) {
             case 1:
-                manager.addNewContactToBook(ContactCreator.createNewContact());
+                manager.addNewContact(ContactCreator.createNewContact());
                 break;
             case 2:
                 manager.showContacts();
