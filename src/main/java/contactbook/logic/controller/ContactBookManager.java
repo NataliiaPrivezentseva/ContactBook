@@ -69,47 +69,50 @@ public class ContactBookManager {
         return previousContacts.isEmpty();
     }
 
+    //todo решить, где спросить юзера, из какого файла подгружать данные
     public void prepareForWork() {
         setContactBook(createContactBook());
         setFileToSaveContactBook(createFileToSaveContactBook());
         if (!isEmptyFileToSaveContactBook()) {
-            uploadContactsFromDefaultFile();
+            try {
+                uploadContactsFromFile(getFileToSaveContactBook());
+            } catch (IOException e) {
+                System.out.println("Something wrong with the file, in which you keep your contact book");;
+            }
         } else {
             System.out.println("Your contact book contains no contacts.");
         }
     }
 
-    //    todo добавить входящий параметр
-    private void uploadContactsFromDefaultFile() {
+    //    todo
+    private void uploadContactsFromFile(File file) throws IOException {
         ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
         InputFromFile inFromFile = new InputFromFile();
-
-        try {
-            setContactBook(deserialiser.turnIntoContactBook (inFromFile.readFromFile(getFileToSaveContactBook())));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setContactBook(deserialiser.turnIntoContactBook(inFromFile.readFromFile(file)));
     }
 
-    //    todo добавить входящий параметр
-    private void downloadContactsToDefaultFile() {
+    //    todo
+    private void downloadContactsToFile(File file) throws IOException {
         OutputToFile outToFile = new OutputToFile();
         ContactBookSerializer serializer = new ContactBookSerializer();
         List<String> contactsInString = serializer.turnIntoListOfStrings(getContactBook());
-        try {
-            outToFile.writeToFile(contactsInString, getFileToSaveContactBook());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        outToFile.writeToFile(contactsInString, file);
     }
 
+    //todo обсудить, а не пробросить ли исключение еще выше.
+    //todo Мне оно тут нравится, но, может, лучше обрабатывать в AppRunner
     public List<Contact> addNewContactToBook(Contact contact) {
         if (contactBook == null) {
             throw new IllegalStateException("Something went wrong! There is no contact book.");
         }
 
         contactBook.add(contact);
-        downloadContactsToDefaultFile();
+        try {
+            downloadContactsToFile(getFileToSaveContactBook());
+        } catch (IOException e) {
+            System.out.println("Sorry, something went wrong! Can't save added contact in the file.");
+            e.printStackTrace();
+        }
         return contactBook;
     }
 
