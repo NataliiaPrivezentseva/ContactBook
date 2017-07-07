@@ -8,10 +8,6 @@ public class EMail {
         this.eMail = eMail;
     }
 
-//    String getEMail() {
-//        return eMail;
-//    }
-
     @Override
     public String toString() {
         return eMail;

@@ -20,7 +20,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "First name: " + firstName + "\nLast name: " + lastName;
+        return "First name: " + firstName + "\nLast name: " + lastName + "\n";
 
     }
 }
