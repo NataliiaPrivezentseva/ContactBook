@@ -69,6 +69,26 @@ class AppRunner {
             case 5:
                 break;
             case 6:
+                String options = "How do you want upload contacts from file?\n" +
+                        "1 — Add contacts to existing contact book\n" +
+                        "2 — Replace existing contacts. " +
+                        "ATTENTION! If you choose this option, your current contacts will be lost!\n";
+                choice = inFromConsole.getChoiceFromUser(options, 2);
+                switch (choice){
+                    case 1:
+                        //todo уточнить вызов этого метода после окончания работы с методом
+                        try {
+                            manager.uploadExistingContactsToContactBook(inFromConsole.getInfoFromUser("name of the " +
+                                    "file, from which you want to upload contacts."));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case 2:
+                        break;
+                    default:
+                        throw new IllegalStateException();
+                }
                 break;
             case 7:
                 try {

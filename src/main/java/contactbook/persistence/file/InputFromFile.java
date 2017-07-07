@@ -9,7 +9,7 @@ import java.util.List;
 
 public class InputFromFile {
 
-    //todo решить, оставлять ли оба метода чтения из файла
+    //todo убрать этот метод, если он не нужен
     List<String> readFromFile(String fileName) throws IOException {
         File fileToRead = new File("c:\\" + fileName + ".txt");
         return this.readFromFile(fileToRead);

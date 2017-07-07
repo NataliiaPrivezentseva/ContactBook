@@ -24,7 +24,7 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    private void setContactBook(List<Contact> contactBook) {
+    public void setContactBook(List<Contact> contactBook) {
         this.contactBook = contactBook;
     }
 
@@ -32,7 +32,7 @@ public class ContactBookManager {
         return fileToSaveContactBook;
     }
 
-    private void setFileToSaveContactBook(File fileToSaveContactBook) {
+    public void setFileToSaveContactBook(File fileToSaveContactBook) {
         this.fileToSaveContactBook = fileToSaveContactBook;
     }
 
@@ -87,7 +87,8 @@ public class ContactBookManager {
         setFileToSaveContactBook(createFileToSaveContactBook(fileName));
         if (!isEmptyFileToSaveContactBook()) {
             try {
-                uploadContactsFromFile(getFileToSaveContactBook());
+                List<Contact> contactsFromFile = uploadContactsFromFile(getFileToSaveContactBook());
+                setContactBook(contactsFromFile);
             } catch (IOException e) {
                 System.out.println("Something wrong with the file, in which you keep your contact book");
             }
@@ -96,10 +97,10 @@ public class ContactBookManager {
         }
     }
 
-    private void uploadContactsFromFile(File file) throws IOException {
+    private List<Contact> uploadContactsFromFile(File file) throws IOException {
         ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
         InputFromFile inFromFile = new InputFromFile();
-        setContactBook(deserialiser.turnIntoContactBook(inFromFile.readFromFile(file)));
+        return deserialiser.turnIntoContactBook(inFromFile.readFromFile(file));
     }
 
     private void downloadContactsToFile(File file) throws IOException {
@@ -148,13 +149,19 @@ public class ContactBookManager {
         return contactBook;
     }
 
-    //todo доделать метод
-    public void uploadContactsFromFile(String fileName) {
+    //todo подумать, какой Exception выбросить
+    //todo методы загрузки в файл везде - параметры?
+    public List<Contact> uploadExistingContactsToContactBook(String fileName) throws IOException {
         FileCreator creator = new FileCreator();
         File file = creator.createFile(fileName);
         if (isEmptyFile(file)) {
-
+            throw new IllegalStateException("This file contains no contacts.");
         }
+        List<Contact> newContacts = uploadContactsFromFile(file);
+        for (Contact contact : newContacts) {
+            addNewContact(contact);
+        }
+        return getContactBook();
     }
 
     public void downloadContactBookToFile(String fileName) throws IOException {
