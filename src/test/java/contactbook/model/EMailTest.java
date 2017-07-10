@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class EMailTest {
 
-    EMail eMail = new EMail("bob.frankly@gmail.com");
+    private EMail eMail = new EMail("bob.frankly@gmail.com");
 
     @Test
     public void shouldProduceProperString(){

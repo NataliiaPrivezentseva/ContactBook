@@ -1,15 +1,14 @@
-package contactbook.logic.controller;
+package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
-import contactbook.persistence.de_serialization.ContactDeserialiser;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ContactBookDeserialiserTest {
+public class ContactDeserialiserTest {
 
     @Test
     public void shouldDeserializeContact() {
