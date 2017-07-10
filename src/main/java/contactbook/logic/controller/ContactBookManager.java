@@ -40,12 +40,12 @@ public class ContactBookManager {
         return new ArrayList<>();
     }
 
-    //todo метод лишний, потому как теперь в нем нет опций выбора?
     private File createFileToSaveContactBook(String fileName) {
         FileCreator fileCreator = new FileCreator();
         return fileCreator.createFile(fileName);
     }
 
+    //todo подумать, как по-другому проверить, что файл пуст
     private boolean isEmptyFile(File file) {
         InputFromFile inFromFile = new InputFromFile();
         List<String> previousContacts = new ArrayList<>();
@@ -110,8 +110,7 @@ public class ContactBookManager {
         outToFile.writeToFile(contactsInString, file);
     }
 
-    //todo обсудить, а не пробросить ли исключение еще выше.
-    //todo Мне оно тут нравится, но, может, лучше обрабатывать в AppRunner
+    //todo пробросить исключение еще выше, лучше обрабатывать в AppRunner
     public List<Contact> addNewContact(Contact contact) {
         if (contactBook == null) {
             throw new IllegalStateException("Something went wrong! There is no contact book.");

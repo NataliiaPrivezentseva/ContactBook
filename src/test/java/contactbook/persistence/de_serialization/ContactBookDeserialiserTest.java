@@ -2,10 +2,13 @@ package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
 import contactbook.model.PhoneNumber;
+import org.hamcrest.CoreMatchers;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -32,12 +35,12 @@ public class ContactBookDeserialiserTest {
         assertEquals("Sirotenko", contactBook.get(0).getPerson().getLastName());
         assertEquals("Ferry", contactBook.get(1).getPerson().getLastName());
 
-        List<PhoneNumber> numbers = new ArrayList<>();
+        List<PhoneNumber> numbers = new ArrayList<>(2);
         numbers.add(new PhoneNumber("444444444"));
         numbers.add(new PhoneNumber("555555555"));
-        assertEquals(numbers.toString(), contactBook.get(1).getPhoneNumbers().toString());
-        numbers.add(new PhoneNumber("095875654"));
-        assertEquals(numbers.get(2).toString(), contactBook.get(0).getPhoneNumbers().get(0).toString());
+        assertEquals(numbers,contactBook.get(1).getPhoneNumbers());
+        assertEquals(Collections.singletonList(new PhoneNumber("095875654")),
+                contactBook.get(0).getPhoneNumbers());
 
         assertEquals("andrej.sirotenko@filarmonija.kh", contactBook.get(0).getEMail().toString());
         assertEquals("masha.ferry@j.com", contactBook.get(1).getEMail().toString());
