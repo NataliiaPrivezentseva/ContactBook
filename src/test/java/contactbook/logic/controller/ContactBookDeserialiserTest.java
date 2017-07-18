@@ -1,6 +1,7 @@
 package contactbook.logic.controller;
 
 import contactbook.model.Contact;
+import contactbook.persistence.de_serialization.ContactDeserialiser;
 import org.junit.Test;
 
 import java.util.Arrays;

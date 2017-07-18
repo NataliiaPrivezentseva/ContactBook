@@ -1,4 +1,4 @@
-package contactbook.logic.controller;
+package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
 import contactbook.model.EMail;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ContactDeserialiser {
 
-    Contact turnIntoContact(List<String> inputInStrings, int start) {
+    public Contact turnIntoContact(List<String> inputInStrings, int start) {
         String fieldNameSeparator = ": ";
         String elementsSeparator = ", ";
 
