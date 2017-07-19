@@ -1,57 +1,67 @@
 package contactbook.logic.validators;
 
-import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.FromDataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+@RunWith(Theories.class)
 public class EmailValidatorTest {
 
     private EmailValidator validator = new EmailValidator();
 
-    @Test
-    public void testProperEMail(){
-        String eMail = "asterisk0123456789@gmail.com";
-        String eMail1 = "k.smith@letters.no";
-        String eMail2 = "mother_tereza@not.here";
-        String eMail3 = "Mike@hot.there";
-        String eMail4 = "not-I@i.ua";
-        String eMail5 = "eric.monte-carlo@Adjos55.amigo3";
+    @DataPoints("properEMails")
+    public static String[] properEMails = {"asterisk0123456789@gmail.com",
+            "k.smith@letters.no",
+            "mother_tereza@not.here",
+            "Mike@hot.there",
+            "not-I@i.ua",
+            "eric.monte-carlo@Adjos55.amigo3"};
 
+    @DataPoints("moreThanOneMonkeyEMails")
+    public static String[] monkeyEMails = {"tata@@gmail.com",
+            "@mama@gmail.com",
+            "sister@gmail@.com",
+            "tree@@@monkey.com"};
+
+    @DataPoints("specialCharactersEMails")
+    public static String[] specialCharactersEMails = {"Tim,Roth@big.stars", "Tim.Roth@big,stars",
+            "Tim:Roth@big.stars", "Tim.Roth@big:stars",
+            "Tim;Roth@big.stars", "Tim.Roth@big;stars",
+            "Tim!Roth@big.stars", "Tim.Roth@big!stars",
+            "Tim#Roth@big.stars", "Tim.Roth@big#stars",
+            "Tim$Roth@big.stars", "Tim.Roth@big$stars",
+            "Tim%Roth@big.stars", "Tim.Roth@big%stars",
+            "Tim&Roth@big.stars", "Tim.Roth@big&stars",
+            "Tim'Roth@big.stars", "Tim.Roth@big'stars",
+            "Tim*Roth@big.stars", "Tim.Roth@big*stars",
+            "Tim+Roth@big.stars", "Tim.Roth@big+stars",
+            "Tim/Roth@big.stars", "Tim.Roth@big/stars",
+            "Tim=Roth@big.stars", "Tim.Roth@big=stars",
+            "Tim?Roth@big.stars", "Tim.Roth@big?stars",
+            "Tim^Roth@big.stars", "Tim.Roth@big^stars",
+            "Tim`Roth@big.stars", "Tim.Roth@big`stars",
+            "Tim{Roth@big.stars", "Tim.Roth@big{stars",
+            "Tim|Roth@big.stars", "Tim.Roth@big|stars",
+            "Tim}Roth@big.stars", "Tim.Roth@big}stars",
+            "Tim~Roth@big.stars", "Tim.Roth@big~stars"};
+
+    @Theory
+    public void testProperEMail(@FromDataPoints("properEMails")String eMail){
         assertTrue(validator.isValid(eMail));
-        assertTrue(validator.isValid(eMail1));
-        assertTrue(validator.isValid(eMail2));
-        assertTrue(validator.isValid(eMail3));
-        assertTrue(validator.isValid(eMail4));
-        assertTrue(validator.isValid(eMail5));
     }
 
-    @Test
-    public void testEMailWithMoreThanOneMonkey(){
-        String eMail = "tata@@gmail.com";
-        String eMail1 = "@mama@gmail.com";
-        String eMail2 = "sister@gmail@.com";
-        String eMail3 = "tree@@@monkey.com";
-
+    @Theory
+    public void testEMailWithMoreThanOneMonkey(@FromDataPoints("moreThanOneMonkeyEMails")String eMail){
         assertFalse(validator.isValid(eMail));
-        assertFalse(validator.isValid(eMail1));
-        assertFalse(validator.isValid(eMail2));
-        assertFalse(validator.isValid(eMail3));
     }
 
-    @Test
-    public void testEMailWithSpecialCharacters(){
-        String eMail = "Tim:Roth@big.stars";
-        String eMail1 = "Tim,Roth@big.stars";
-        String eMail2 = "Tim.Roth@big,stars";
-        String eMail3 = "Tim.Roth@big:stars";
-        String eMail4 = "Tim;Roth@big;stars";
-        String eMail5 = "!#$%&'*+/=?^`{|}~@yandex.ru";
-
+    @Theory
+    public void testEMailWithSpecialCharacters(@FromDataPoints("specialCharactersEMails")String eMail){
         assertFalse(validator.isValid(eMail));
-        assertFalse(validator.isValid(eMail1));
-        assertFalse(validator.isValid(eMail2));
-        assertFalse(validator.isValid(eMail3));
-        assertFalse(validator.isValid(eMail4));
-        assertFalse(validator.isValid(eMail5));
     }
 }
