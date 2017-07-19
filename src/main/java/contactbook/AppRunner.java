@@ -1,12 +1,22 @@
 package contactbook;
 
+import contactbook.logic.builders.ContactBuilder;
+import contactbook.logic.builders.PersonBuilder;
 import contactbook.logic.controller.ContactBookManager;
-import contactbook.logic.creators.ContactCreator;
+import contactbook.logic.creators.PhoneNumbersListCreator;
+import contactbook.model.Contact;
+import contactbook.model.EMail;
+import contactbook.ui.console.EMailGetter;
 import contactbook.ui.console.InputFromConsole;
 
 import java.io.IOException;
 
 class AppRunner {
+    private ContactBookManager manager = new ContactBookManager();
+    private InputFromConsole inFromConsole = new InputFromConsole();
+    private EMailGetter eMailGetter = new EMailGetter();
+    private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator();
+
     private static final String OPTIONS = "Please, choose what you want to do:\n" +
             "1 — Add new contact\n" +
             "2 — Show contacts\n" +
@@ -26,16 +36,23 @@ class AppRunner {
             "7 — Delete phone number\n" +
             "8 — Delete e-mail";
 
-    static void runApp() {
-        ContactBookManager manager = new ContactBookManager();
-        InputFromConsole inFromConsole = new InputFromConsole();
-
+    void runApp() {
         manager.prepareForWork();
         int choice = inFromConsole.getChoiceFromUser(OPTIONS, 7);
 
         switch (choice) {
             case 1:
-                manager.addNewContact(ContactCreator.createNewContact());
+                ContactBuilder contactBuilder = new ContactBuilder();
+                contactBuilder.withPerson(new PersonBuilder()
+                        .withFirstName(inFromConsole.getInfoFromUser("first name"))
+                        .withLastName(inFromConsole.getInfoFromUser("last name"))
+                        .build());
+                Contact contact = contactBuilder.withPhoneNumbers(phoneNumbersListCreator
+                        .createNewListOfPersonsPhoneNumbers(inFromConsole
+                                .getNumberFromUser("Please, enter, how many phone numbers has this person")))
+                        .withEMail(new EMail(eMailGetter.getProperEMailFromUser()))
+                        .build();
+                manager.addNewContact(contact);
                 break;
             case 2:
                 manager.showContacts();
@@ -74,7 +91,7 @@ class AppRunner {
                         "2 — Replace existing contacts. " +
                         "ATTENTION! If you choose this option, your current contacts will be lost!\n";
                 choice = inFromConsole.getChoiceFromUser(options, 2);
-                switch (choice){
+                switch (choice) {
                     case 1:
                         //todo уточнить вызов этого метода после окончания работы с методом
                         try {
