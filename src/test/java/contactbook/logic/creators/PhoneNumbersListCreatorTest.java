@@ -26,9 +26,12 @@ public class PhoneNumbersListCreatorTest {
 
     @Test
     public void checkListSize(){
-        when(phoneNumberGetter.getProperPhoneNumberFromUser()).thenReturn("123456789");
+        when(phoneNumberGetter.getProperPhoneNumberFromUser())
+                .thenReturn("123456789", "222333555", "987654321", "777111888");
         int amount = 4;
+
         List<PhoneNumber> numbers = phoneNumbersListCreator.createNewListOfPersonsPhoneNumbers(amount);
+
         assertEquals(amount, numbers.size());
         verify(phoneNumberGetter, times(amount)).getProperPhoneNumberFromUser();
     }
