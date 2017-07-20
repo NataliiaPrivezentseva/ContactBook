@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhoneNumbersListCreator {
-    private PhoneNumberGetter phoneNumberGetter = new PhoneNumberGetter();
+    private PhoneNumberGetter phoneNumberGetter;
+
+    public PhoneNumbersListCreator(PhoneNumberGetter phoneNumberGetter) {
+        this.phoneNumberGetter = phoneNumberGetter;
+    }
 
     public List<PhoneNumber> createNewListOfPersonsPhoneNumbers(int amountOfPhoneNumbers) {
         List<PhoneNumber> phoneNumbers = new ArrayList<>();

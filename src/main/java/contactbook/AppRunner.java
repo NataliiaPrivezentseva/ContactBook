@@ -8,15 +8,11 @@ import contactbook.model.Contact;
 import contactbook.model.EMail;
 import contactbook.ui.console.EMailGetter;
 import contactbook.ui.console.InputFromConsole;
+import contactbook.ui.console.PhoneNumberGetter;
 
 import java.io.IOException;
 
 class AppRunner {
-    private ContactBookManager manager = new ContactBookManager();
-    private InputFromConsole inFromConsole = new InputFromConsole();
-    private EMailGetter eMailGetter = new EMailGetter();
-    private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator();
-
     private static final String OPTIONS = "Please, choose what you want to do:\n" +
             "1 — Add new contact\n" +
             "2 — Show contacts\n" +
@@ -25,7 +21,6 @@ class AppRunner {
             "5 — Delete contact\n" +
             "6 — Upload contacts from file\n" +
             "7 — Download contact book to file\n";
-
     private static final String EDIT_OPTIONS = "Choose, what do you want to do with chosen contact:\n" +
             "1 — Change first name\n" +
             "2 — Change last name\n" +
@@ -35,6 +30,10 @@ class AppRunner {
             "6 — Add e-mail (only if field is empty)\n" +
             "7 — Delete phone number\n" +
             "8 — Delete e-mail";
+    private ContactBookManager manager = new ContactBookManager();
+    private InputFromConsole inFromConsole = new InputFromConsole();
+    private EMailGetter eMailGetter = new EMailGetter();
+    private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator(new PhoneNumberGetter());
 
     void runApp() {
         manager.prepareForWork();
@@ -42,16 +41,18 @@ class AppRunner {
 
         switch (choice) {
             case 1:
-                ContactBuilder contactBuilder = new ContactBuilder();
-                contactBuilder.withPerson(new PersonBuilder()
-                        .withFirstName(inFromConsole.getInfoFromUser("first name"))
-                        .withLastName(inFromConsole.getInfoFromUser("last name"))
-                        .build());
-                Contact contact = contactBuilder.withPhoneNumbers(phoneNumbersListCreator
-                        .createNewListOfPersonsPhoneNumbers(inFromConsole
-                                .getNumberFromUser("Please, enter, how many phone numbers has this person")))
+                //todo сделать это методом в классе ContactCreator
+                Contact contact = new ContactBuilder()
+                        .withPerson(new PersonBuilder()
+                                .withFirstName(inFromConsole.getInfoFromUser("first name"))
+                                .withLastName(inFromConsole.getInfoFromUser("last name"))
+                                .build())
+                        .withPhoneNumbers(phoneNumbersListCreator
+                                .createNewListOfPersonsPhoneNumbers(inFromConsole
+                                        .getNumberFromUser("Please, enter, how many phone numbers has this person")))
                         .withEMail(new EMail(eMailGetter.getProperEMailFromUser()))
                         .build();
+
                 manager.addNewContact(contact);
                 break;
             case 2:
@@ -121,4 +122,3 @@ class AppRunner {
         }
     }
 }
-
