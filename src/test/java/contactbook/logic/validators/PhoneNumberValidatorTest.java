@@ -1,58 +1,55 @@
 package contactbook.logic.validators;
 
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.FromDataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+@RunWith(Theories.class)
 public class PhoneNumberValidatorTest {
 
-    @Test
-    public void testTooShortNumber(){
-        String tooShortNumber = "12345";
-        PhoneNumberValidator validator = new PhoneNumberValidator();
+    private PhoneNumberValidator validator = new PhoneNumberValidator();
 
-        assertFalse(validator.isValid(tooShortNumber));
+    @DataPoints("tooShortNumbers")
+    public static String[] tooShortNumbers = {"", "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678"};
+
+    @DataPoints("numbersWithLetters")
+    public static String[] numbersWithLetters = {"0155s4568", "254fsa8e4", "number123", "g2S4567LB", "I10O25789"};
+
+    @DataPoints("numbersWithSpecialCharacters")
+    public static String[] numbersWithSpecialCharacters = {"*12345678", "123@45678", "123456/78", "1234!5678"};
+
+    @DataPoints("properPhoneNumbers")
+    public static String[] properPhoneNumbers = {"095654875", "000000000", "123456789", "987654321"};
+
+
+    @Theory
+    public void testTooShortNumber(@FromDataPoints("tooShortNumbers")String phoneNumber){
+        assertFalse(validator.isValid(phoneNumber));
     }
 
     @Test
     public void testTooLongNumber(){
         String tooLongNumber = "0123456789";
-        PhoneNumberValidator validator = new PhoneNumberValidator();
-
         assertFalse(validator.isValid(tooLongNumber));
     }
 
-    @Test
-    public void testNumberWithLetters(){
-        String numberWithLetters = "0155s4568";
-        PhoneNumberValidator validator = new PhoneNumberValidator();
-
-        assertFalse(validator.isValid(numberWithLetters));
+    @Theory
+    public void testNumberWithLetters(@FromDataPoints("numbersWithLetters")String phoneNumber){
+        assertFalse(validator.isValid(phoneNumber));
     }
 
-    @Test
-    public void testNumberWithSpecialCharacters(){
-        String numberWithSpecialCharacters = "*12345678";
-        String numberWithSpecialCharacters1 = "123@45678";
-        String numberWithSpecialCharacters2 = "123456/78";
-
-        PhoneNumberValidator validator = new PhoneNumberValidator();
-
-        assertFalse(validator.isValid(numberWithSpecialCharacters));
-        assertFalse(validator.isValid(numberWithSpecialCharacters1));
-        assertFalse(validator.isValid(numberWithSpecialCharacters2));
+    @Theory
+    public void testNumberWithSpecialCharacters(@FromDataPoints("numbersWithSpecialCharacters")String phoneNumber){
+        assertFalse(validator.isValid(phoneNumber));
     }
 
-    @Test
-    public void testProperNumber(){
-        String phoneNumber = "095654875";
-        String phoneNumber1 = "000000000";
-        String phoneNumber2 = "123456789";
-
-        PhoneNumberValidator validator = new PhoneNumberValidator();
-
+    @Theory
+    public void testProperNumber(@FromDataPoints("properPhoneNumbers")String phoneNumber){
         assertTrue(validator.isValid(phoneNumber));
-        assertTrue(validator.isValid(phoneNumber1));
-        assertTrue(validator.isValid(phoneNumber2));
     }
 }
