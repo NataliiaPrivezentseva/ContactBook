@@ -16,7 +16,7 @@ public class Contact {
 
     @Override
     public String toString() {
-        return person.toString() + "\n" + "Phone numbers: " + phoneNumbers + "\nE-mail: " + eMail + "\n";
+        return person.toString() + "Phone numbers: " + phoneNumbers + "\nE-mail: " + eMail + "\n";
     }
 
     public Person getPerson() {

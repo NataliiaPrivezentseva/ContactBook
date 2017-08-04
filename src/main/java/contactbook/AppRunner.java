@@ -1,8 +1,14 @@
 package contactbook;
 
+import contactbook.logic.builders.ContactBuilder;
+import contactbook.logic.builders.PersonBuilder;
 import contactbook.logic.controller.ContactBookManager;
-import contactbook.logic.creators.ContactCreator;
+import contactbook.logic.creators.PhoneNumbersListCreator;
+import contactbook.model.Contact;
+import contactbook.model.EMail;
+import contactbook.ui.console.EMailGetter;
 import contactbook.ui.console.InputFromConsole;
+import contactbook.ui.console.PhoneNumberGetter;
 
 import java.io.IOException;
 
@@ -15,7 +21,6 @@ class AppRunner {
             "5 — Delete contact\n" +
             "6 — Upload contacts from file\n" +
             "7 — Download contact book to file\n";
-
     private static final String EDIT_OPTIONS = "Choose, what do you want to do with chosen contact:\n" +
             "1 — Change first name\n" +
             "2 — Change last name\n" +
@@ -25,17 +30,30 @@ class AppRunner {
             "6 — Add e-mail (only if field is empty)\n" +
             "7 — Delete phone number\n" +
             "8 — Delete e-mail";
+    private ContactBookManager manager = new ContactBookManager();
+    private InputFromConsole inFromConsole = new InputFromConsole();
+    private EMailGetter eMailGetter = new EMailGetter();
+    private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator(new PhoneNumberGetter());
 
-    static void runApp() {
-        ContactBookManager manager = new ContactBookManager();
-        InputFromConsole inFromConsole = new InputFromConsole();
-
+    void runApp() {
         manager.prepareForWork();
         int choice = inFromConsole.getChoiceFromUser(OPTIONS, 7);
 
         switch (choice) {
             case 1:
-                manager.addNewContact(ContactCreator.createNewContact());
+                //todo сделать это методом в классе ContactCreator
+                Contact contact = new ContactBuilder()
+                        .withPerson(new PersonBuilder()
+                                .withFirstName(inFromConsole.getInfoFromUser("first name"))
+                                .withLastName(inFromConsole.getInfoFromUser("last name"))
+                                .build())
+                        .withPhoneNumbers(phoneNumbersListCreator
+                                .createNewListOfPersonsPhoneNumbers(inFromConsole
+                                        .getNumberFromUser("Please, enter, how many phone numbers has this person")))
+                        .withEMail(new EMail(eMailGetter.getProperEMailFromUser()))
+                        .build();
+
+                manager.addNewContact(contact);
                 break;
             case 2:
                 manager.showContacts();
@@ -74,7 +92,7 @@ class AppRunner {
                         "2 — Replace existing contacts. " +
                         "ATTENTION! If you choose this option, your current contacts will be lost!\n";
                 choice = inFromConsole.getChoiceFromUser(options, 2);
-                switch (choice){
+                switch (choice) {
                     case 1:
                         //todo уточнить вызов этого метода после окончания работы с методом
                         try {
@@ -104,4 +122,3 @@ class AppRunner {
         }
     }
 }
-
