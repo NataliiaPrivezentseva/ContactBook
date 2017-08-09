@@ -1,9 +1,8 @@
 package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
+import contactbook.model.EMail;
 import contactbook.model.PhoneNumber;
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class ContactBookDeserialiserTest {
                 "Phone numbers: [444444444, 555555555]",
                 "E-mail: masha.ferry@j.com");
 
-        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
+        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
         List<Contact> contactBook = deserialiser.turnIntoContactBook(contacts);
 
         assertEquals("Andrej", contactBook.get(0).getPerson().getFirstName());
@@ -35,15 +34,14 @@ public class ContactBookDeserialiserTest {
         assertEquals("Sirotenko", contactBook.get(0).getPerson().getLastName());
         assertEquals("Ferry", contactBook.get(1).getPerson().getLastName());
 
+        assertEquals(Collections.singletonList(new PhoneNumber("095875654")),
+                contactBook.get(0).getPhoneNumbers());
         List<PhoneNumber> numbers = new ArrayList<>(2);
         numbers.add(new PhoneNumber("444444444"));
         numbers.add(new PhoneNumber("555555555"));
         assertEquals(numbers,contactBook.get(1).getPhoneNumbers());
-        assertEquals(Collections.singletonList(new PhoneNumber("095875654")),
-                contactBook.get(0).getPhoneNumbers());
 
-        assertEquals("andrej.sirotenko@filarmonija.kh", contactBook.get(0).getEMail().toString());
-        assertEquals("masha.ferry@j.com", contactBook.get(1).getEMail().toString());
+        assertEquals(new EMail("andrej.sirotenko@filarmonija.kh"), contactBook.get(0).getEMail());
+        assertEquals(new EMail("masha.ferry@j.com"), contactBook.get(1).getEMail());
     }
-
 }

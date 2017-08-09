@@ -30,4 +30,27 @@ public class Contact {
     public EMail getEMail() {
         return eMail;
     }
+
+    // тут ли надо переопределить, чтобы починить тест? Как переопределить?
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Contact)) return false;
+
+        Contact contact = (Contact) o;
+
+        if (!person.equals(contact.person)) return false;
+        if (!phoneNumbers.equals(contact.phoneNumbers)) return false;
+        if (!eMail.equals(contact.eMail)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = person.hashCode();
+        result = 31 * result + phoneNumbers.hashCode();
+        result = 31 * result + eMail.hashCode();
+        return result;
+    }
 }

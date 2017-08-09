@@ -3,6 +3,7 @@ package contactbook.logic.controller;
 import contactbook.model.Contact;
 import contactbook.persistence.de_serialization.ContactBookDeserialiser;
 import contactbook.persistence.de_serialization.ContactBookSerializer;
+import contactbook.persistence.de_serialization.ContactDeserialiser;
 import contactbook.persistence.file.FileCreator;
 import contactbook.persistence.file.InputFromFile;
 import contactbook.persistence.file.OutputToFile;
@@ -47,15 +48,16 @@ public class ContactBookManager {
 
     //todo подумать, как по-другому проверить, что файл пуст
     private boolean isEmptyFile(File file) {
-        InputFromFile inFromFile = new InputFromFile();
-        List<String> previousContacts = new ArrayList<>();
-        try {
-            previousContacts = inFromFile.readFromFile(file);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return previousContacts.isEmpty();
+        return file.length() == 0;
+//        InputFromFile inFromFile = new InputFromFile();
+//        List<String> previousContacts = new ArrayList<>();
+//        try {
+//            previousContacts = inFromFile.readFromFile(file);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return previousContacts.isEmpty();
     }
 
     private boolean isEmptyFileToSaveContactBook() {
@@ -98,7 +100,7 @@ public class ContactBookManager {
     }
 
     private List<Contact> uploadContactsFromFile(File file) throws IOException {
-        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser();
+        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
         InputFromFile inFromFile = new InputFromFile();
         return deserialiser.turnIntoContactBook(inFromFile.readFromFile(file));
     }

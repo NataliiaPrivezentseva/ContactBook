@@ -6,16 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactBookDeserialiser {
-/*
+
     private ContactDeserialiser deserialiser;
 
     public ContactBookDeserialiser(ContactDeserialiser deserialiser) {
         this.deserialiser = deserialiser;
     }
-*/
 
     public List<Contact> turnIntoContactBook(List<String> inputInStrings) {
-        ContactDeserialiser deserialiser = new ContactDeserialiser();
         List<Contact> contactBook = new ArrayList<>();
 
         for (int startOfContact = 0;
