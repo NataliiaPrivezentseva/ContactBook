@@ -1,12 +1,9 @@
-package contactbook.ui.console;
+package contactbook.ui;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created by Nataly on 10.07.2017.
- */
 public class FileOptionsTest {
 
     @Test

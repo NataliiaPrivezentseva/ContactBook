@@ -1,9 +1,5 @@
-package contactbook.ui.console;
+package contactbook.ui;
 
-/**
- * Created by Nataly on 10.07.2017.
- */
-//Fixme: move to UI package
 public enum FileOptions {
     DEFAULT("into default file named \\'my_contacts\\' which placed on disc C"),
     CUSTOM("I want to use another file");
@@ -19,13 +15,8 @@ public enum FileOptions {
     }
 
     @Override
-    //Fixme: move to console interface class
+    //Fixme: move to console interface class - это куда? и что переместить? метод??
     public String toString() {
         return (ordinal() + 1) + " — " + message;
     }
 }
-/*
-public enum FileOptions {
-    DEFAULT,
-    CUSTOM
-}*/

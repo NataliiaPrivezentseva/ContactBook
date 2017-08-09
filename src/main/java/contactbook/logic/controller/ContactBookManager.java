@@ -21,6 +21,14 @@ public class ContactBookManager {
     private List<Contact> contactBook;
     private File fileToSaveContactBook;
 
+    private FileCreator fileCreator = new FileCreator();
+    private InputFromConsole inFromConsole = new InputFromConsole();
+    private InputFromFile inFromFile = new InputFromFile();
+    private OutputToConsole outToConsole = new OutputToConsole();
+    private OutputToFile outToFile = new OutputToFile();
+    private ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
+    private ContactBookSerializer serializer = new ContactBookSerializer();
+
     private List<Contact> getContactBook() {
         return contactBook;
     }
@@ -42,22 +50,11 @@ public class ContactBookManager {
     }
 
     private File createFileToSaveContactBook(String fileName) {
-        FileCreator fileCreator = new FileCreator();
         return fileCreator.createFile(fileName);
     }
 
-    //todo подумать, как по-другому проверить, что файл пуст
     private boolean isEmptyFile(File file) {
         return file.length() == 0;
-//        InputFromFile inFromFile = new InputFromFile();
-//        List<String> previousContacts = new ArrayList<>();
-//        try {
-//            previousContacts = inFromFile.readFromFile(file);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return previousContacts.isEmpty();
     }
 
     private boolean isEmptyFileToSaveContactBook() {
@@ -67,7 +64,6 @@ public class ContactBookManager {
     //todo а не выделить ли из части кода отдельный метод? типа getBaseFileNameFromUser
     //todo может, строку-вопрос сделать константой в этом классе?
     public void prepareForWork() {
-        InputFromConsole inFromConsole = new InputFromConsole();
         String message = "In which file do you want to store your contact book?\n" +
                 "1 — into default file named \\'my_contacts\\' which placed on disc C\n" +
                 "2 — I want to use another file";
@@ -100,14 +96,10 @@ public class ContactBookManager {
     }
 
     private List<Contact> uploadContactsFromFile(File file) throws IOException {
-        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
-        InputFromFile inFromFile = new InputFromFile();
         return deserialiser.turnIntoContactBook(inFromFile.readFromFile(file));
     }
 
     private void downloadContactsToFile(File file) throws IOException {
-        OutputToFile outToFile = new OutputToFile();
-        ContactBookSerializer serializer = new ContactBookSerializer();
         List<String> contactsInString = serializer.turnIntoListOfStrings(getContactBook());
         outToFile.writeToFile(contactsInString, file);
     }
@@ -129,9 +121,6 @@ public class ContactBookManager {
     }
 
     public void showContacts() {
-        OutputToConsole outToConsole = new OutputToConsole();
-        ContactBookSerializer serializer = new ContactBookSerializer();
-
         outToConsole.printToConsole(serializer.turnIntoListOfStrings(getContactBook()));
     }
 
@@ -153,8 +142,7 @@ public class ContactBookManager {
     //todo подумать, какой Exception выбросить
     //todo методы загрузки в файл везде - параметры?
     public List<Contact> uploadExistingContactsToContactBook(String fileName) throws IOException {
-        FileCreator creator = new FileCreator();
-        File file = creator.createFile(fileName);
+        File file = fileCreator.createFile(fileName);
         if (isEmptyFile(file)) {
             throw new IllegalStateException("This file contains no contacts.");
         }
