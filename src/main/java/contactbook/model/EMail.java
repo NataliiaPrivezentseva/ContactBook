@@ -1,6 +1,6 @@
 package contactbook.model;
 
-import com.google.common.base.Objects;
+import java.util.Objects;
 
 public class EMail {
 
@@ -15,7 +15,7 @@ public class EMail {
         if (o == null) return false;
         if (getClass() != o.getClass()) return false;
         final EMail other = (EMail) o;
-        return Objects.equal(this.eMail, other.eMail);
+        return Objects.equals(this.eMail, other.eMail);
     }
 
     @Override
