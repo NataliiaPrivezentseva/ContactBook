@@ -7,12 +7,14 @@ import contactbook.persistence.de_serialization.ContactDeserialiser;
 import contactbook.persistence.file.FileCreator;
 import contactbook.persistence.file.InputFromFile;
 import contactbook.persistence.file.OutputToFile;
+import contactbook.ui.FileOptions;
 import contactbook.ui.console.InputFromConsole;
 import contactbook.ui.console.OutputToConsole;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,37 +63,37 @@ public class ContactBookManager {
         return isEmptyFile(getFileToSaveContactBook());
     }
 
-    //todo а не выделить ли из части кода отдельный метод? типа getBaseFileNameFromUser
-    //todo может, строку-вопрос сделать константой в этом классе?
     public void prepareForWork() {
-        String message = "In which file do you want to store your contact book?\n" +
-                "1 — into default file named \\'my_contacts\\' which placed on disc C\n" +
-                "2 — I want to use another file";
-        int choice = inFromConsole.getChoiceFromUser(message, 2);
-        String fileName;
-        switch (choice) {
-            case 1:
-                fileName = "my_contacts";
-                break;
-            case 2:
-                fileName = inFromConsole.getInfoFromUser("Please, enter name of file, " +
-                        "where your contacts will be saved.");
-                break;
-            default:
-                throw new IllegalStateException();
-        }
-
         setContactBook(createContactBook());
-        setFileToSaveContactBook(createFileToSaveContactBook(fileName));
+        setFileToSaveContactBook(createFileToSaveContactBook(getNameOfStoringFileFromUser()));
         if (!isEmptyFileToSaveContactBook()) {
             try {
                 List<Contact> contactsFromFile = uploadContactsFromFile(getFileToSaveContactBook());
                 setContactBook(contactsFromFile);
             } catch (IOException e) {
-                System.out.println("Something wrong with the file, in which you keep your contact book");
+                System.out.println("Something wrong with the file, in which you keep your contact book.");
             }
         } else {
             System.out.println("Your contact book contains no contacts.");
+        }
+    }
+
+    //todo сделать красивое отображение списка из Enum
+    private String getNameOfStoringFileFromUser(){
+//        String message = "In which file do you want to store your contact book?\n" +
+//                FileOptions.DEFAULT.toString() + "\n" + FileOptions.CUSTOM.toString();
+        String message = "In which file do you want to store your contact book?\n" +
+                Arrays.toString(FileOptions.values());
+
+        int choice = inFromConsole.getChoiceFromUser(message, 2);
+        FileOptions chosenOption = FileOptions.fromInteger(choice);
+        switch (chosenOption) {
+            case DEFAULT:
+                return "my_contacts";
+            case CUSTOM:
+                return inFromConsole.getInfoFromUser("Please, enter name of file, where your contacts will be saved.");
+            default:
+                throw new IllegalStateException();
         }
     }
 
@@ -132,6 +134,9 @@ public class ContactBookManager {
 
     List<Contact> deleteContact(Contact contact) {
         //todo вызвать тут метод findContact, проверка на наличие контакта должна быть в методе findContact
+        // NO! JUST DELETE, IF EXIST
+        // вывести пользователю сообщение, что контакт не был удален, т.к. такого контакта нет в списке
+        // удалять контакт надо по Person
         if (!contactBook.contains(contact)) {
             throw new NoSuchElementException();
         }
@@ -140,7 +145,7 @@ public class ContactBookManager {
     }
 
     //todo подумать, какой Exception выбросить
-    //todo методы загрузки в файл везде - параметры?
+    //todo методы загрузки в файл везде - параметры? - о чем это я?
     public List<Contact> uploadExistingContactsToContactBook(String fileName) throws IOException {
         File file = fileCreator.createFile(fileName);
         if (isEmptyFile(file)) {

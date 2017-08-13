@@ -1,7 +1,7 @@
 package contactbook.ui;
 
 public enum FileOptions {
-    DEFAULT("into default file named \\'my_contacts\\' which placed on disc C"),
+    DEFAULT("into default file named \'my_contacts\' which placed on disc C"),
     CUSTOM("I want to use another file");
 
     private final String message;
