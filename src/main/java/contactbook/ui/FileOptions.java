@@ -15,7 +15,6 @@ public enum FileOptions {
     }
 
     @Override
-    //Fixme: move to console interface class - это куда? и что переместить? метод??
     public String toString() {
         return (ordinal() + 1) + " — " + message;
     }

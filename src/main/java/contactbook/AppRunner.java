@@ -6,41 +6,31 @@ import contactbook.logic.controller.ContactBookManager;
 import contactbook.logic.creators.PhoneNumbersListCreator;
 import contactbook.model.Contact;
 import contactbook.model.EMail;
+import contactbook.ui.AppOptions;
+import contactbook.ui.EditOptions;
 import contactbook.ui.console.EMailGetter;
 import contactbook.ui.console.InputFromConsole;
+import contactbook.ui.console.MessageForUserCreator;
 import contactbook.ui.console.PhoneNumberGetter;
 
 import java.io.IOException;
 
 class AppRunner {
-    private static final String OPTIONS = "Please, choose what you want to do:\n" +
-            "1 — Add new contact\n" +
-            "2 — Show contacts\n" +
-            "3 — Find contact\n" +
-            "4 — Edit contact\n" +
-            "5 — Delete contact\n" +
-            "6 — Upload contacts from file\n" +
-            "7 — Download contact book to file\n";
-    private static final String EDIT_OPTIONS = "Choose, what do you want to do with chosen contact:\n" +
-            "1 — Change first name\n" +
-            "2 — Change last name\n" +
-            "3 — Change phone number\n" +
-            "4 — Change e-mail\n" +
-            "5 — Add new phone number\n" +
-            "6 — Add e-mail (only if field is empty)\n" +
-            "7 — Delete phone number\n" +
-            "8 — Delete e-mail";
     private ContactBookManager manager = new ContactBookManager();
     private InputFromConsole inFromConsole = new InputFromConsole();
     private EMailGetter eMailGetter = new EMailGetter();
     private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator(new PhoneNumberGetter());
+    private MessageForUserCreator messageForUserCreator = new MessageForUserCreator();
 
     void runApp() {
         manager.prepareForWork();
-        int choice = inFromConsole.getChoiceFromUser(OPTIONS, 7);
+        String messageForUser = messageForUserCreator
+                .createMessageFromEnum("Please, choose what you want to do:", AppOptions.values());
+        int choice = inFromConsole.getChoiceFromUser(messageForUser, 7);
+        AppOptions chosenOption = AppOptions.fromInteger(choice);
 
-        switch (choice) {
-            case 1:
+        switch (chosenOption) {
+            case ADD_CONTACT:
                 //todo сделать это методом в классе ContactCreator
                 Contact contact = new ContactBuilder()
                         .withPerson(new PersonBuilder()
@@ -55,38 +45,42 @@ class AppRunner {
 
                 manager.addNewContact(contact);
                 break;
-            case 2:
+            case SHOW_CONTACTS:
                 manager.showContacts();
                 break;
-            case 3:
+            case FIND_CONTACT:
                 break;
-            case 4:
-                choice = inFromConsole.getChoiceFromUser(EDIT_OPTIONS, 8);
-                switch (choice) {
-                    case 1:
-                        System.out.println("I work!");
+            case EDIT_CONTACT:
+                String message = messageForUserCreator
+                        .createMessageFromEnum("Choose, what do you want to do with chosen contact:",
+                                EditOptions.values());
+                choice = inFromConsole.getChoiceFromUser(message, 8);
+                EditOptions chosenEditOption = EditOptions.fromInteger(choice);
+
+                switch (chosenEditOption) {
+                    case CHANGE_FIRST_NAME:
                         break;
-                    case 2:
+                    case CHANGE_LAST_NAME:
                         break;
-                    case 3:
+                    case CHANGE_PHONE_NUMBER:
                         break;
-                    case 4:
+                    case CHANGE_EMAIL:
                         break;
-                    case 5:
+                    case ADD_PHONE_NUMBER:
                         break;
-                    case 6:
+                    case ADD_EMAIL:
                         break;
-                    case 7:
+                    case DELETE_PHONE_NUMBER:
                         break;
-                    case 8:
+                    case DELETE_EMAIL:
                         break;
                     default:
                         throw new IllegalStateException();
                 }
                 break;
-            case 5:
+            case DELETE_CONTACT:
                 break;
-            case 6:
+            case UPLOAD_CONTACTS:
                 String options = "How do you want upload contacts from file?\n" +
                         "1 — Add contacts to existing contact book\n" +
                         "2 — Replace existing contacts. " +
@@ -108,7 +102,7 @@ class AppRunner {
                         throw new IllegalStateException();
                 }
                 break;
-            case 7:
+            case DOWNLOAD_CONTACTS:
                 try {
                     manager.downloadContactBookToFile(inFromConsole.getInfoFromUser("name of the file, " +
                             "where you want to download your contact book."));

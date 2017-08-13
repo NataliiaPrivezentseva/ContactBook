@@ -9,12 +9,12 @@ import contactbook.persistence.file.InputFromFile;
 import contactbook.persistence.file.OutputToFile;
 import contactbook.ui.FileOptions;
 import contactbook.ui.console.InputFromConsole;
+import contactbook.ui.console.MessageForUserCreator;
 import contactbook.ui.console.OutputToConsole;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,6 +30,7 @@ public class ContactBookManager {
     private OutputToFile outToFile = new OutputToFile();
     private ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
     private ContactBookSerializer serializer = new ContactBookSerializer();
+    private MessageForUserCreator messageForUserCreator = new MessageForUserCreator();
 
     private List<Contact> getContactBook() {
         return contactBook;
@@ -78,14 +79,12 @@ public class ContactBookManager {
         }
     }
 
-    //todo сделать красивое отображение списка из Enum
-    private String getNameOfStoringFileFromUser(){
-//        String message = "In which file do you want to store your contact book?\n" +
-//                FileOptions.DEFAULT.toString() + "\n" + FileOptions.CUSTOM.toString();
-        String message = "In which file do you want to store your contact book?\n" +
-                Arrays.toString(FileOptions.values());
+    private String getNameOfStoringFileFromUser() {
+        String messageForUser = messageForUserCreator
+                .createMessageFromEnum("In which file do you want to store your contact book?",
+                        FileOptions.values());
 
-        int choice = inFromConsole.getChoiceFromUser(message, 2);
+        int choice = inFromConsole.getChoiceFromUser(messageForUser, 2);
         FileOptions chosenOption = FileOptions.fromInteger(choice);
         switch (chosenOption) {
             case DEFAULT:
