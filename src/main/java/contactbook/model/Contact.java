@@ -1,6 +1,7 @@
 package contactbook.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Contact {
     public static final int STRINGS_IN_ONE_CONTACT = 4;
@@ -31,26 +32,18 @@ public class Contact {
         return eMail;
     }
 
-    // тут ли надо переопределить, чтобы починить тест? Как переопределить?
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Contact)) return false;
-
-        Contact contact = (Contact) o;
-
-        if (!person.equals(contact.person)) return false;
-        if (!phoneNumbers.equals(contact.phoneNumbers)) return false;
-        if (!eMail.equals(contact.eMail)) return false;
-
-        return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+        final Contact other = (Contact) o;
+        return Objects.equals(this.person, other.getPerson()) &&
+                Objects.equals(this.phoneNumbers, other.getPhoneNumbers()) &&
+                Objects.equals(this.eMail, other.getEMail());
     }
 
     @Override
     public int hashCode() {
-        int result = person.hashCode();
-        result = 31 * result + phoneNumbers.hashCode();
-        result = 31 * result + eMail.hashCode();
-        return result;
+        return Objects.hash(this.person, this.phoneNumbers, this.eMail);
     }
 }
