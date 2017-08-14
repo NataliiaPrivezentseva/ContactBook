@@ -6,23 +6,29 @@ import static org.junit.Assert.*;
 
 public class EditOptionsTest {
 
-    //    private static final String EDIT_OPTIONS = "Choose, what do you want to do with chosen contact:\n" +
-//            "1 — Change first name\n" +
-//            "2 — Change last name\n" +
-//            "3 — Change phone number\n" +
-//            "4 — Change e-mail\n" +
-//            "5 — Add new phone number\n" +
-//            "6 — Add e-mail (only if field is empty)\n" +
-//            "7 — Delete phone number\n" +
-//            "8 — Delete e-mail";
+    private String[] allOptions = {"1 — Change first name",
+            "2 — Change last name",
+            "3 — Change phone number",
+            "4 — Change e-mail",
+            "5 — Add new phone number",
+            "6 — Add e-mail (only if field is empty)",
+            "7 — Delete phone number",
+            "8 — Delete e-mail"};
+
+    private EditOptions[] optionsFromEnum = EditOptions.values();
+
 
     @Test
     public void shouldReturnWithOrdinal(){
-        assertEquals("3 — Change phone number", EditOptions.CHANGE_PHONE_NUMBER.toString());
+        for (int i = 0; i < allOptions.length; i++) {
+            assertEquals(allOptions[i], optionsFromEnum[i].toString());
+        }
     }
 
     @Test
     public void shouldConvertOrdinal(){
-        assertEquals(EditOptions.fromInteger(2), EditOptions.CHANGE_LAST_NAME);
+        for (int i = 0; i < allOptions.length; i++) {
+            assertEquals(EditOptions.fromInteger(i + 1), optionsFromEnum[i]);
+        }
     }
 }

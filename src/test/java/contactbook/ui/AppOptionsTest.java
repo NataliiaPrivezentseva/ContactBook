@@ -6,8 +6,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AppOptionsTest {
 
-    //todo check all values of Enum
-    private static String[] allOptions = {"1 — Add new contact",
+    private String[] allOptions = {"1 — Add new contact",
             "2 — Show contacts",
             "3 — Find contact",
             "4 — Edit contact",
@@ -15,7 +14,7 @@ public class AppOptionsTest {
             "6 — Upload contacts from file",
             "7 — Download contact book to file"};
 
-    private static AppOptions[] optionsFromEnum = AppOptions.values();
+    private AppOptions[] optionsFromEnum = AppOptions.values();
 
 
     @Test

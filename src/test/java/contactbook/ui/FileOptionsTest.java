@@ -6,14 +6,23 @@ import static org.junit.Assert.assertEquals;
 
 public class FileOptionsTest {
 
+    private String[] allOptions = {"1 — into default file named \'my_contacts\' which placed on disc C",
+            "2 — I want to use another file"};
+
+    private FileOptions[] optionsFromEnum = FileOptions.values();
+
     @Test
     public void shouldReturnWithOrdinal(){
-        assertEquals("2 — I want to use another file", FileOptions.CUSTOM.toString());
+        for (int i = 0; i < allOptions.length; i++) {
+            assertEquals(allOptions[i], optionsFromEnum[i].toString());
+        }
     }
 
     @Test
     public void shouldConvertOrdinal(){
-        assertEquals(FileOptions.fromInteger(2), FileOptions.CUSTOM);
+        for (int i = 0; i < allOptions.length; i++) {
+            assertEquals(FileOptions.fromInteger(i + 1), optionsFromEnum[i]);
+        }
     }
 
 }
