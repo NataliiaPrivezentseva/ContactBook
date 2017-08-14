@@ -1,26 +1,19 @@
 package contactbook;
 
-import contactbook.logic.builders.ContactBuilder;
-import contactbook.logic.builders.PersonBuilder;
 import contactbook.logic.controller.ContactBookManager;
-import contactbook.logic.creators.PhoneNumbersListCreator;
-import contactbook.model.Contact;
-import contactbook.model.EMail;
+import contactbook.logic.creators.ContactCreator;
 import contactbook.ui.AppOptions;
 import contactbook.ui.EditOptions;
-import contactbook.ui.console.EMailGetter;
 import contactbook.ui.console.InputFromConsole;
 import contactbook.ui.console.MessageForUserCreator;
-import contactbook.ui.console.PhoneNumberGetter;
 
 import java.io.IOException;
 
 class AppRunner {
     private ContactBookManager manager = new ContactBookManager();
     private InputFromConsole inFromConsole = new InputFromConsole();
-    private EMailGetter eMailGetter = new EMailGetter();
-    private PhoneNumbersListCreator phoneNumbersListCreator = new PhoneNumbersListCreator(new PhoneNumberGetter());
     private MessageForUserCreator messageForUserCreator = new MessageForUserCreator();
+    private ContactCreator contactCreator = new ContactCreator();
 
     void runApp() {
         manager.prepareForWork();
@@ -31,19 +24,7 @@ class AppRunner {
 
         switch (chosenOption) {
             case ADD_CONTACT:
-                //todo сделать это методом в классе ContactCreator
-                Contact contact = new ContactBuilder()
-                        .withPerson(new PersonBuilder()
-                                .withFirstName(inFromConsole.getInfoFromUser("first name"))
-                                .withLastName(inFromConsole.getInfoFromUser("last name"))
-                                .build())
-                        .withPhoneNumbers(phoneNumbersListCreator
-                                .createNewListOfPersonsPhoneNumbers(inFromConsole
-                                        .getNumberFromUser("Please, enter, how many phone numbers has this person")))
-                        .withEMail(new EMail(eMailGetter.getProperEMailFromUser()))
-                        .build();
-
-                manager.addNewContact(contact);
+                manager.addNewContact(contactCreator.createNewContact());
                 break;
             case SHOW_CONTACTS:
                 manager.showContacts();
