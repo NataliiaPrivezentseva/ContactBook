@@ -5,9 +5,14 @@ import java.io.IOException;
 
 public class FileCreator {
 
-    // creates txt file at disk C
-    //todo может, не нужны тут выводы в консоль о том, был ли создан файл или уже существовал?
-    //todo я писала их, пока хотела понимать, что там проиходит, а пользователю это не важно
+    /**
+     * Atomically creates on disk C a new, empty txt file named by this abstract pathname if
+     * and only if a file with this name does not yet exist.
+     * @param fileName the pathname of the file, which will be return
+     * @return The absolute abstract pathname denoting the same file as this abstract pathname
+     */
+
+    //todo write these messages into log-file
     public File createFile(String fileName) {
         File file = null;
         try {
