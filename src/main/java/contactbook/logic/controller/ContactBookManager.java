@@ -67,6 +67,7 @@ public class ContactBookManager {
     public void prepareForWork() {
         setContactBook(createContactBook());
         setFileToSaveContactBook(createFileToSaveContactBook(getNameOfStoringFileFromUser()));
+
         if (!isEmptyFileToSaveContactBook()) {
             try {
                 List<Contact> contactsFromFile = uploadContactsFromFile(getFileToSaveContactBook());
