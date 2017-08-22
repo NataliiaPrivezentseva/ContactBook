@@ -5,11 +5,11 @@ import contactbook.model.Contact;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactBookDeserialiser {
+public class ContactBookDeserialiserFromListOfStrings implements ContactBookDeserializer {
 
     private ContactDeserialiser deserialiser;
 
-    public ContactBookDeserialiser(ContactDeserialiser deserialiser) {
+    public ContactBookDeserialiserFromListOfStrings(ContactDeserialiser deserialiser) {
         this.deserialiser = deserialiser;
     }
 

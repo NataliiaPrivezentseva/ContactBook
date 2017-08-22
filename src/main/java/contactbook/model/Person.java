@@ -1,5 +1,7 @@
 package contactbook.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class Person {
@@ -7,7 +9,8 @@ public class Person {
     private String firstName;
     private String lastName;
 
-    public Person(String firstName, String lastName) {
+
+    public Person(@JsonProperty("firstName")String firstName, @JsonProperty("lastName")String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }

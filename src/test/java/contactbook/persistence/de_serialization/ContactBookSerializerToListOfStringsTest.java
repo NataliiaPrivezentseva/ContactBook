@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ContactBookSerializerTest {
+public class ContactBookSerializerToListOfStringsTest {
     private Person person1 = new Person("Max", "Salliwan");
     private PhoneNumber[] number1 = {new PhoneNumber("999888777")};
     private List<PhoneNumber> phoneNumbers1 = Arrays.asList(number1);
@@ -29,7 +29,7 @@ public class ContactBookSerializerTest {
 
     @Test
     public void shouldSerializeContactBook() {
-        ContactBookSerializer serializer = new ContactBookSerializer();
+        ContactBookSerializerToListOfStrings serializer = new ContactBookSerializerToListOfStrings();
         assertEquals("First name: Max\nLast name: Salliwan\nPhone numbers: [999888777]\n" +
                 "E-mail: max@salliwan.com\n", serializer.turnIntoListOfStrings(contactBook).get(0));
         assertEquals("First name: Nad\nLast name: Stark\nPhone numbers: [333222555, 777666333]\n" +

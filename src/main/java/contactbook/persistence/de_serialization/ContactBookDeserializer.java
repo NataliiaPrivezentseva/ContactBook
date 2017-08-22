@@ -4,7 +4,7 @@ import contactbook.model.Contact;
 
 import java.util.List;
 
-public interface ContactBookSerializer {
+public interface ContactBookDeserializer {
 
-    List<String> turnIntoListOfStrings(List<Contact> contactBook);
+    List<Contact> turnIntoContactBook(List<String> inputInStrings);
 }

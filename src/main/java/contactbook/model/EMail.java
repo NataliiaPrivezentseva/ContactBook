@@ -1,13 +1,19 @@
 package contactbook.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public class EMail {
 
     private String eMail;
 
-    public EMail(String eMail) {
+    public EMail(@JsonProperty("email")String eMail) {
         this.eMail = eMail;
+    }
+
+    public String getEMail() {
+        return eMail;
     }
 
     @Override
