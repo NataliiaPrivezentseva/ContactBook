@@ -1,5 +1,7 @@
 package contactbook.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +11,8 @@ public class Contact {
     private List<PhoneNumber> phoneNumbers;
     private EMail eMail;
 
-    public Contact(Person person, List<PhoneNumber> phoneNumbers, EMail eMail) {
+    public Contact(@JsonProperty("person") Person person, @JsonProperty("phoneNumbers") List<PhoneNumber> phoneNumbers,
+                   @JsonProperty("email") EMail eMail) {
         this.person = person;
         this.phoneNumbers = phoneNumbers;
         this.eMail = eMail;

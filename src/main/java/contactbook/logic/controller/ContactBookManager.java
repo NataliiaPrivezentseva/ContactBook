@@ -1,8 +1,12 @@
 package contactbook.logic.controller;
 
 import contactbook.model.Contact;
-import contactbook.persistence.de_serialization.ContactBookDeserialiser;
+import contactbook.persistence.de_serialization.ContactBookDeserialiserFromListOfStrings;
+import contactbook.persistence.de_serialization.ContactBookDeserializer;
+import contactbook.persistence.de_serialization.ContactBookDeserializerFromJSON;
 import contactbook.persistence.de_serialization.ContactBookSerializer;
+import contactbook.persistence.de_serialization.ContactBookSerializerToJSON;
+import contactbook.persistence.de_serialization.ContactBookSerializerToListOfStrings;
 import contactbook.persistence.de_serialization.ContactDeserialiser;
 import contactbook.persistence.file.FileCreator;
 import contactbook.persistence.file.InputFromFile;
@@ -24,13 +28,18 @@ public class ContactBookManager {
     private File fileToSaveContactBook;
 
     private FileCreator fileCreator = new FileCreator();
+    private MessageForUserCreator messageForUserCreator = new MessageForUserCreator();
+
     private InputFromConsole inFromConsole = new InputFromConsole();
     private InputFromFile inFromFile = new InputFromFile();
     private OutputToConsole outToConsole = new OutputToConsole();
     private OutputToFile outToFile = new OutputToFile();
-    private ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
-    private ContactBookSerializer serializer = new ContactBookSerializer();
-    private MessageForUserCreator messageForUserCreator = new MessageForUserCreator();
+
+    private ContactBookDeserializer deserialiser = new ContactBookDeserializerFromJSON();
+    private ContactBookSerializer serializer = new ContactBookSerializerToJSON();
+
+//    private ContactBookDeserializer deserialiser = new ContactBookDeserialiserFromListOfStrings(new ContactDeserialiser());
+//    private ContactBookSerializer serializer = new ContactBookSerializerToListOfStrings();
 
     private List<Contact> getContactBook() {
         return contactBook;

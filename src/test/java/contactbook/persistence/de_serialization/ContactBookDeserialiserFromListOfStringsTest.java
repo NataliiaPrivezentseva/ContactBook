@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ContactBookDeserialiserTest {
+public class ContactBookDeserialiserFromListOfStringsTest {
 
     @Test
     public void shouldDeserializeContactBook() {
@@ -25,7 +25,7 @@ public class ContactBookDeserialiserTest {
                 "Phone numbers: [444444444, 555555555]",
                 "E-mail: masha.ferry@j.com");
 
-        ContactBookDeserialiser deserialiser = new ContactBookDeserialiser(new ContactDeserialiser());
+        ContactBookDeserializer deserialiser = new ContactBookDeserialiserFromListOfStrings(new ContactDeserialiser());
         List<Contact> contactBook = deserialiser.turnIntoContactBook(contacts);
 
         assertEquals("Andrej", contactBook.get(0).getPerson().getFirstName());

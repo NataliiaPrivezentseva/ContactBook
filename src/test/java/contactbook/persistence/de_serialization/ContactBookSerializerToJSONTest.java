@@ -9,9 +9,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-public class ContactBookSerializerTest {
+public class ContactBookSerializerToJSONTest {
     private Person person1 = new Person("Max", "Salliwan");
     private PhoneNumber[] number1 = {new PhoneNumber("999888777")};
     private List<PhoneNumber> phoneNumbers1 = Arrays.asList(number1);
@@ -29,10 +29,13 @@ public class ContactBookSerializerTest {
 
     @Test
     public void shouldSerializeContactBook() {
-        ContactBookSerializer serializer = new ContactBookSerializer();
-        assertEquals("First name: Max\nLast name: Salliwan\nPhone numbers: [999888777]\n" +
-                "E-mail: max@salliwan.com\n", serializer.turnIntoListOfStrings(contactBook).get(0));
-        assertEquals("First name: Nad\nLast name: Stark\nPhone numbers: [333222555, 777666333]\n" +
-                "E-mail: nad.stark@war.end\n", serializer.turnIntoListOfStrings(contactBook).get(1));
+        ContactBookSerializerToJSON serializer = new ContactBookSerializerToJSON();
+        assertEquals("{\"person\":{\"firstName\":\"Max\",\"lastName\":\"Salliwan\"},\"phoneNumbers\":" +
+                "[{\"phoneNumber\":\"999888777\"}],\"email\":{\"email\":\"max@salliwan.com\"}}",
+                serializer.turnIntoListOfStrings(contactBook).get(0));
+        assertEquals("{\"person\":{\"firstName\":\"Nad\",\"lastName\":\"Stark\"},\"phoneNumbers\":" +
+                "[{\"phoneNumber\":\"333222555\"},{\"phoneNumber\":\"777666333\"}]," +
+                "\"email\":{\"email\":\"nad.stark@war.end\"}}",
+                serializer.turnIntoListOfStrings(contactBook).get(1));
     }
 }
