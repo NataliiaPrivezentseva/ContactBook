@@ -10,7 +10,10 @@ public class OutputToFile {
 
 public void writeToFile(List<String> infoFromContactBook, File fileToWrite) throws IOException {
         try (PrintWriter outputStream = new PrintWriter(new FileWriter(fileToWrite))) {
-            outputStream.println(infoFromContactBook);
+            for (String s : infoFromContactBook){
+                outputStream.println(s);
+            }
+
         }
     }
 }

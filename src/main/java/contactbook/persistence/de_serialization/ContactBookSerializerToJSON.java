@@ -22,6 +22,5 @@ public class ContactBookSerializerToJSON implements ContactBookSerializer {
             }
         }
         return contactsInString;
-
     }
 }

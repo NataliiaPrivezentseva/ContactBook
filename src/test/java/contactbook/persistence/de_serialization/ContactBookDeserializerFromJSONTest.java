@@ -14,15 +14,6 @@ import static org.junit.Assert.*;
 
 public class ContactBookDeserializerFromJSONTest {
 
-/*    @Test
-    public void testSingleLiner(){
-        String input = "[{\"person\":{\"firstName\":\"Fox\",\"lastName\":\"Red\"},\"phoneNumbers\":[{\"phoneNumber\":\"222333444\"},{\"phoneNumber\":\"555666777\"}],\"email\":{\"email\":\"fox.red@gmail.com\"}}, {\"person\":{\"firstName\":\"Wolf\",\"lastName\":\"Grey\"},\"phoneNumbers\":[{\"phoneNumber\":\"888777888\"}],\"email\":{\"email\":\"wolf.grey@no.letters\"}}, {\"person\":{\"firstName\":\"Mike\",\"lastName\":\"Carry\"},\"phoneNumbers\":[{\"phoneNumber\":\"555555555\"}],\"email\":{\"email\":\"mike.carry@i.pl\"}}]";
-        ContactBookDeserializerFromJSON deserialiser = new ContactBookDeserializerFromJSON();
-        List<Contact> contactBook = deserialiser.turnIntoBook(input);
-        assertTrue(!contactBook.isEmpty());
-        assertTrue(contactBook.size() == 3);
-    }*/
-
     @Test
     public void shouldDeserializeContactBook(){
         List<String> contacts = Arrays
