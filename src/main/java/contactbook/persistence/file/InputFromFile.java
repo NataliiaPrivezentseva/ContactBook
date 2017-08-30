@@ -9,12 +9,6 @@ import java.util.List;
 
 public class InputFromFile {
 
-    //todo убрать этот метод, если он не нужен
-    List<String> readFromFile(String fileName) throws IOException {
-        File fileToRead = new File("c:\\" + fileName + ".txt");
-        return this.readFromFile(fileToRead);
-    }
-
     public List<String> readFromFile(File fileToRead) throws IOException {
         List<String> inputInStrings = new ArrayList<>();
         try (BufferedReader inputStream = new BufferedReader(new FileReader(fileToRead))) {

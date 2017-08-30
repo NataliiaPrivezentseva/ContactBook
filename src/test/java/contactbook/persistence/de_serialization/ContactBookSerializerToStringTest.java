@@ -1,4 +1,3 @@
-/*
 package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
@@ -12,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class ContactBookSerializerToListOfStringsTest {
+public class ContactBookSerializerToStringTest {
     private Person person1 = new Person("Max", "Salliwan");
     private PhoneNumber[] number1 = {new PhoneNumber("999888777")};
     private List<PhoneNumber> phoneNumbers1 = Arrays.asList(number1);
@@ -30,10 +29,10 @@ public class ContactBookSerializerToListOfStringsTest {
 
     @Test
     public void shouldSerializeContactBook() {
-        ContactBookSerializerToListOfStrings serializer = new ContactBookSerializerToListOfStrings();
-        assertEquals("First name: Max\nLast name: Salliwan\nPhone numbers: [999888777]\n" +
-                "E-mail: max@salliwan.com\n", serializer.turnIntoListOfStrings(contactBook).get(0));
-        assertEquals("First name: Nad\nLast name: Stark\nPhone numbers: [333222555, 777666333]\n" +
-                "E-mail: nad.stark@war.end\n", serializer.turnIntoListOfStrings(contactBook).get(1));
+        ContactBookSerializerToString serializer = new ContactBookSerializerToString();
+        assertEquals("[First name: Max\nLast name: Salliwan\nPhone numbers: [999888777]\n" +
+                "E-mail: max@salliwan.com\n, First name: Nad\nLast name: Stark\nPhone numbers: " +
+                "[333222555, 777666333]\nE-mail: nad.stark@war.end\n]",
+                serializer.turnIntoString(contactBook));
     }
-}*/
+}

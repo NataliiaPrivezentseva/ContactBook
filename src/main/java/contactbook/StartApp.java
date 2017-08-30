@@ -1,15 +1,7 @@
 package contactbook;
 
-import contactbook.model.Contact;
-import contactbook.model.EMail;
-import contactbook.model.Person;
-import contactbook.model.PhoneNumber;
-import contactbook.persistence.de_serialization.ContactBookSerializer;
-import contactbook.persistence.de_serialization.ContactBookSerializerToListOfStrings;
 //import contactbook.persistence.de_serialization.ContactBookSerializerToXML;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class StartApp {
 
@@ -18,7 +10,7 @@ public class StartApp {
         runner.runApp();
 
 /*//        ContactBookSerializer serializer = new ContactBookSerializerToXML();
-        ContactBookSerializer serializer = new ContactBookSerializerToListOfStrings();
+        ContactBookSerializer serializer = new ContactBookSerializerToString();
 
         Person person1 = new Person("Max", "Salliwan");
         PhoneNumber[] number1 = {new PhoneNumber("999888777")};
@@ -35,8 +27,8 @@ public class StartApp {
 
         List<Contact> contactBook = Arrays.asList(contact1, contact2);
 
-        serializer.turnIntoListOfStrings(contactBook);
-//        List<String> xml = serializer.turnIntoListOfStrings(contactBook);
+        serializer.turnIntoString(contactBook);
+//        List<String> xml = serializer.turnIntoString(contactBook);
 //        for(String s : xml){
 //            System.out.println(s);
 //        }*/

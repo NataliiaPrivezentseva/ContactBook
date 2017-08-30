@@ -1,4 +1,3 @@
-/*
 package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
@@ -31,12 +30,11 @@ public class ContactBookSerializerToJSONTest {
     @Test
     public void shouldSerializeContactBook() {
         ContactBookSerializerToJSON serializer = new ContactBookSerializerToJSON();
-        assertEquals("{\"person\":{\"firstName\":\"Max\",\"lastName\":\"Salliwan\"},\"phoneNumbers\":" +
-                "[{\"phoneNumber\":\"999888777\"}],\"email\":{\"email\":\"max@salliwan.com\"}}",
-                serializer.turnIntoListOfStrings(contactBook).get(0));
-        assertEquals("{\"person\":{\"firstName\":\"Nad\",\"lastName\":\"Stark\"},\"phoneNumbers\":" +
+        assertEquals("[{\"person\":{\"firstName\":\"Max\",\"lastName\":\"Salliwan\"},\"phoneNumbers\":" +
+                "[{\"phoneNumber\":\"999888777\"}],\"email\":{\"email\":\"max@salliwan.com\"}}, " +
+                "{\"person\":{\"firstName\":\"Nad\",\"lastName\":\"Stark\"},\"phoneNumbers\":" +
                 "[{\"phoneNumber\":\"333222555\"},{\"phoneNumber\":\"777666333\"}]," +
-                "\"email\":{\"email\":\"nad.stark@war.end\"}}",
-                serializer.turnIntoListOfStrings(contactBook).get(1));
+                "\"email\":{\"email\":\"nad.stark@war.end\"}}]",
+                serializer.turnIntoString(contactBook));
     }
-}*/
+}
