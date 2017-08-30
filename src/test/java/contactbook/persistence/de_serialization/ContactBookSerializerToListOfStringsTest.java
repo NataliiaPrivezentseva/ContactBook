@@ -1,4 +1,3 @@
-/*
 package contactbook.persistence.de_serialization;
 
 import contactbook.model.Contact;
@@ -36,4 +35,4 @@ public class ContactBookSerializerToListOfStringsTest {
         assertEquals("First name: Nad\nLast name: Stark\nPhone numbers: [333222555, 777666333]\n" +
                 "E-mail: nad.stark@war.end\n", serializer.turnIntoListOfStrings(contactBook).get(1));
     }
-}*/
+}

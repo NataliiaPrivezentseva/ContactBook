@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface ContactBookSerializer {
 
-//    List<String> turnIntoListOfStrings(List<Contact> contactBook);
-    String turnIntoListOfStrings(List<Contact> contactBook);
+    List<String> turnIntoListOfStrings(List<Contact> contactBook);
 }

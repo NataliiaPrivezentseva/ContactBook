@@ -1,4 +1,3 @@
-/*
 package contactbook.persistence.de_serialization;
 
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
@@ -71,9 +70,8 @@ public class ContactBookSerializerToXML implements ContactBookSerializer {
             eMailEl.appendChild(document.createTextNode(contact.getEMail().toString()));
         }
 
-        // write to file
-*/
-/*        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+/*        // write to file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
         try {
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
@@ -85,7 +83,7 @@ public class ContactBookSerializerToXML implements ContactBookSerializer {
 
         } catch (TransformerException e) {
             e.printStackTrace();
-        }*//*
+        }*/
 
         String result;
         try {
@@ -115,4 +113,3 @@ public class ContactBookSerializerToXML implements ContactBookSerializer {
         return contactsInXML;
     }
 }
-*/

@@ -8,19 +8,11 @@ import java.util.List;
 
 public class OutputToFile {
 
-//public void writeToFile(List<String> infoFromContactBook, File fileToWrite) throws IOException {
-//        try (PrintWriter outputStream = new PrintWriter(new FileWriter(fileToWrite))) {
-//            for (String s : infoFromContactBook){
-//                outputStream.println(s);
-//            }
-//
-//        }
-//    }
-
-    public void writeToFile(String infoFromContactBook, File fileToWrite) throws IOException {
+public void writeToFile(List<String> infoFromContactBook, File fileToWrite) throws IOException {
         try (PrintWriter outputStream = new PrintWriter(new FileWriter(fileToWrite))) {
-
-                outputStream.println(infoFromContactBook);
+            for (String s : infoFromContactBook){
+                outputStream.println(s);
+            }
 
         }
     }
