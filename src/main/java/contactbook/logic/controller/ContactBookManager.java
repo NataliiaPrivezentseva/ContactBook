@@ -5,7 +5,7 @@ import contactbook.persistence.de_serialization.ContactBookDeserialiserFromListO
 import contactbook.persistence.de_serialization.ContactBookDeserializer;
 import contactbook.persistence.de_serialization.ContactBookDeserializerFromJSON;
 import contactbook.persistence.de_serialization.ContactBookSerializer;
-import contactbook.persistence.de_serialization.ContactBookSerializerToJSON;
+//import contactbook.persistence.de_serialization.ContactBookSerializerToJSON;
 import contactbook.persistence.de_serialization.ContactBookSerializerToListOfStrings;
 import contactbook.persistence.de_serialization.ContactDeserialiser;
 import contactbook.persistence.file.FileCreator;
@@ -35,11 +35,11 @@ public class ContactBookManager {
     private OutputToConsole outToConsole = new OutputToConsole();
     private OutputToFile outToFile = new OutputToFile();
 
-    private ContactBookDeserializer deserialiser = new ContactBookDeserializerFromJSON();
-    private ContactBookSerializer serializer = new ContactBookSerializerToJSON();
+//    private ContactBookDeserializer deserialiser = new ContactBookDeserializerFromJSON();
+//    private ContactBookSerializer serializer = new ContactBookSerializerToJSON();
 
-//    private ContactBookDeserializer deserialiser = new ContactBookDeserialiserFromListOfStrings(new ContactDeserialiser());
-//    private ContactBookSerializer serializer = new ContactBookSerializerToListOfStrings();
+    private ContactBookDeserializer deserialiser = new ContactBookDeserialiserFromListOfStrings(new ContactDeserialiser());
+    private ContactBookSerializer serializer = new ContactBookSerializerToListOfStrings();
 
     private List<Contact> getContactBook() {
         return contactBook;
@@ -111,7 +111,8 @@ public class ContactBookManager {
     }
 
     private void downloadContactsToFile(File file) throws IOException {
-        List<String> contactsInString = serializer.turnIntoListOfStrings(getContactBook());
+//        List<String> contactsInString = serializer.turnIntoListOfStrings(getContactBook());
+        String contactsInString = serializer.turnIntoListOfStrings(getContactBook());
         outToFile.writeToFile(contactsInString, file);
     }
 

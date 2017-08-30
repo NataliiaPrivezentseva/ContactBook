@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ContactDeserialiser {
 
-    public Contact turnIntoContact(List<String> inputInStrings, int start) {
+    Contact turnIntoContact(List<String> inputInStrings, int start) {
         String fieldNameSeparator = ": ";
         String elementsSeparator = ", ";
 
