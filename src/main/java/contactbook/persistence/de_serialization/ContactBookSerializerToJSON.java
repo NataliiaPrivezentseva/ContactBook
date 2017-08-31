@@ -23,4 +23,9 @@ public class ContactBookSerializerToJSON implements ContactBookSerializer {
         }
         return contactsInString;
     }
+
+    @Override
+    public String getFileExtension() {
+        return ".txt";
+    }
 }

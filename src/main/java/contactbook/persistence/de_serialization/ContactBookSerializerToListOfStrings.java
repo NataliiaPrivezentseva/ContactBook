@@ -14,4 +14,9 @@ public class ContactBookSerializerToListOfStrings implements ContactBookSerializ
         }
         return contactsInString;
     }
+
+    @Override
+    public String getFileExtension() {
+        return ".txt";
+    }
 }

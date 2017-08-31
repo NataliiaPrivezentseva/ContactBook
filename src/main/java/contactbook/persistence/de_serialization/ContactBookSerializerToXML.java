@@ -85,4 +85,9 @@ public class ContactBookSerializerToXML implements ContactBookSerializer {
         contactsInXML.add(result);
         return contactsInXML;
     }
+
+    @Override
+    public String getFileExtension() {
+        return ".xml";
+    }
 }
