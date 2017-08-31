@@ -62,7 +62,7 @@ public class ContactBookManager {
     }
 
     private File createFileToSaveContactBook(String fileName) {
-        return fileCreator.createFile(fileName);
+        return fileCreator.createFile(fileName, serializer.getFileExtension());
     }
 
     private boolean isEmptyFile(File file) {
@@ -156,7 +156,7 @@ public class ContactBookManager {
     //todo подумать, какой Exception выбросить
     //todo методы загрузки в файл везде - параметры? - о чем это я?
     public List<Contact> uploadExistingContactsToContactBook(String fileName) throws IOException {
-        File file = fileCreator.createFile(fileName);
+        File file = fileCreator.createFile(fileName, serializer.getFileExtension());
         if (isEmptyFile(file)) {
             throw new IllegalStateException("This file contains no contacts.");
         }
