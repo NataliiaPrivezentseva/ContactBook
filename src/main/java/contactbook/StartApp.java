@@ -1,13 +1,10 @@
 package contactbook;
 
 import contactbook.model.Contact;
-import contactbook.model.EMail;
-import contactbook.model.Person;
-import contactbook.model.PhoneNumber;
-import contactbook.persistence.de_serialization.ContactBookSerializer;
-import contactbook.persistence.de_serialization.ContactBookSerializerToXML;
+import contactbook.persistence.de_serialization.ContactBookDeserializer;
+import contactbook.persistence.de_serialization.ContactBookDeserializerFromXML;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StartApp {
@@ -16,27 +13,36 @@ public class StartApp {
 //        AppRunner runner = new AppRunner();
 //        runner.runApp();
 
-        ContactBookSerializer serializer = new ContactBookSerializerToXML();
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<contactbook>\n" +
+                "  <contact>\n" +
+                "    <person>\n" +
+                "      <firstName>Max</firstName>\n" +
+                "      <lastName>Salliwan</lastName>\n" +
+                "    </person>\n" +
+                "    <phoneNumbers>\n" +
+                "      <phoneNumber>999888777</phoneNumber>\n" +
+                "    </phoneNumbers>\n" +
+                "    <email>max@salliwan.com</email>\n" +
+                "  </contact>\n" +
+                "  <contact>\n" +
+                "    <person>\n" +
+                "      <firstName>Nad</firstName>\n" +
+                "      <lastName>Stark</lastName>\n" +
+                "    </person>\n" +
+                "    <phoneNumbers>\n" +
+                "      <phoneNumber>333222555</phoneNumber>\n" +
+                "      <phoneNumber>777666333</phoneNumber>\n" +
+                "    </phoneNumbers>\n" +
+                "    <email>nad.stark@war.end</email>\n" +
+                "  </contact>\n" +
+                "</contactbook>\n";
+        List<String> contactsInXML = new ArrayList<>();
+        contactsInXML.add(xml);
 
-        Person person1 = new Person("Max", "Salliwan");
-        PhoneNumber[] number1 = {new PhoneNumber("999888777")};
-        List<PhoneNumber> phoneNumbers1 = Arrays.asList(number1);
-        EMail eMail1 = new EMail("max@salliwan.com");
-        Contact contact1 = new Contact(person1, phoneNumbers1, eMail1);
-
-        Person person2 = new Person("Nad", "Stark");
-        PhoneNumber number2 = new PhoneNumber("333222555");
-        PhoneNumber number3 = new PhoneNumber("777666333");
-        List<PhoneNumber> phoneNumbers2 = Arrays.asList(number2, number3);
-        EMail eMail2 = new EMail("nad.stark@war.end");
-        Contact contact2 = new Contact(person2, phoneNumbers2, eMail2);
-
-        List<Contact> contactBook = Arrays.asList(contact1, contact2);
-
-        List<String> xml = serializer.turnIntoListOfStrings(contactBook);
-        for(String s : xml){
-            System.out.println(s);
-        }
-
+        ContactBookDeserializer deserialiser = new ContactBookDeserializerFromXML();
+        List<Contact> contactList = deserialiser.turnIntoContactBook(contactsInXML);
+        System.out.println(contactList);
     }
+
 }
